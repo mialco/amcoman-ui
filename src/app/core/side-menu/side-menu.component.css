@@ -1,0 +1,31 @@
+
+#sidebar {
+    width:13em;    
+}
+.nav-link[data-toggle].collapsed:after {
+    content: "▾";
+    padding-left : 5px;
+}
+.nav-link[data-toggle]:not(.collapsed):after {
+    content: "▴";
+}   
+
+.expand-button{
+    padding : 10px;
+    z-index: 1030; /* z-index of fixed as per bootstrap4*/
+}
+
+:host>div{
+    background-color: #34252F !important;
+}
+
+.nav-item div{
+    background-color: #584C54 !important;
+}
+
+.submenu .nav-item:hover{
+    background-color: #463841;
+}
+:host a {
+    color: white;
+}

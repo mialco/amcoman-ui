@@ -1,0 +1,6 @@
+<!-- <p class="w-25"> -->
+  <ngb-alert role="alert" class="alert-warning" *ngFor="let alert of messageService.messages.reverse()" [type]="alert.type" (close)="messageService.remove(alert)" >
+    {{alert.message}}
+  </ngb-alert>
+  
+<!-- </p> -->

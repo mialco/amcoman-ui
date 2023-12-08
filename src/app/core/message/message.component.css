@@ -1,0 +1,18 @@
+:host > .alert {
+    
+word-break: break-all;
+}
+
+:host > .alert-dismissible .close{
+    position: relative;
+    top:-.75rem;
+    right: -1.25rem;
+
+}
+p{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    opacity: 0.8;
+}
+

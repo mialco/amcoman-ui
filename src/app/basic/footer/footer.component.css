@@ -1,0 +1,11 @@
+div{
+    text-align: center;
+}
+
+div a{
+    color :black;
+}
+:host{
+    padding: 2em 8em;
+    background-color: #519872  !important;
+}

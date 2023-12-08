@@ -1,0 +1,8 @@
+.navbar{
+    background-color: #3d6a5e;
+    color: white;
+}
+
+.navbar a{
+    color: white !important;
+}
