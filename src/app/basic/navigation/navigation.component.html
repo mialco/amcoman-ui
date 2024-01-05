@@ -4,7 +4,7 @@
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
     aria-expanded="false" aria-label="Toggle navigation" (click)="collapsed=!collapsed">
-    <span class="navbar-toggler-icon"></span>
+    <span class="navbar-toggler-icon">ccxbxcv</span>
   </button>
 
   <div [ngClass]="{'collapse' : collapsed, 'navbar-collapse' : true}" id="navbarSupportedContent">
@@ -14,6 +14,7 @@
           <span class="sr-only">(current)</span>
         </a>
       </li>
+
       <!-- <li class="nav-item dropdown">
         <div ngbDropdown class="nav-link d-inline-block">
           <a id="dropdownBasic1" ngbDropdownToggle>Products</a>
@@ -26,13 +27,20 @@
         </div>
       </li> -->
       <li class="nav-item">
-          <a routerLink="/about" class="nav-link" routerLinkActive="active">About</a>
-        </li>
+        <div>
+        <a routerLink="/about-us" class="nav-link"  routerLinkActive="active" ariaCurrentWhenActive="page">About</a>
+          <!-- <a routerLink="/user/bob" routerLinkActive="active-link">Bob</a> -->
+        </div>
+        </li>  
       <li class="nav-item">
         <a routerLink="/contact-us" class="nav-link" routerLinkActive="active">Contact Us</a>
       </li>
       <li class="nav-item">
-          <a routerLink="/affiliate-disclosure" class="nav-link" routerLinkActive="active">Affiliate Disclosure</a>
+        <a routerLink="/affiliate-disclosure" class="nav-link" routerLinkActive="active">Affiliate Disclosure</a>
+          
+      </li> 
+        <li class="nav-item">
+          <a href=""  routerLink="/affiliate-disclosure" class="nav-link" routerLinkActive="active">Affiliate Disclosure</a>
         </li> 
 
     </ul>

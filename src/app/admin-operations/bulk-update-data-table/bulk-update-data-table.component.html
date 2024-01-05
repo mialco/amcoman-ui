@@ -1,0 +1,45 @@
+
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th> Id </th>
+          <th> Name </th>
+          <th> Description </th>
+          <!-- <th> Category </th> -->
+          <th> Image </th>
+          <th> Link </th>
+          <th> Selected</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of dataSource">
+          <td> {{row.prodId}} </td>
+          <td> {{row.productName}}</td>
+          <td class="col-2">            
+            <span [innerHTML]="row.description" ></span>
+            <!-- <truncate [maxLength]="170" [text]="row.description" [isHtml]=true></truncate> -->
+          </td>
+          <!-- <td>{{row.categoryName}}</td> -->
+          <td class="">
+            <img alt="{{row.imgAlt}}" src="{{row.imgUrl}}" width="100" *ngIf="row.imgUrl">
+            <span *ngIf="!row.imgUrl"> N/A</span>
+          </td>
+          <td>
+            <span *ngIf="row.navigateUrl">
+              <a href="{{row.navigateUrl}}" target="_blank">
+                Link
+
+              </a>
+
+            </span>
+            <span *ngIf="!row.navigateUrl">
+              N/A
+            </span>
+          </td>
+          <td>
+            <input type="checkbox" [checked]="row.isSelected" (change)="onRowSelec(row)" > </td>
+        </tr>
+      </tbody>
+    </table>
+ 

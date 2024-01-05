@@ -1,0 +1,8 @@
+<div class="row justify-content-center" *ngIf="(totalPages || totalRecords)">
+  <div class="col-md-1"> <a  class="btn btn-primary text-white" (click)="onPageNavigation(navigationLinks.FIRST)"> First </a></div>
+  <div class="col-md-1"><a class="btn btn-primary  text-white"  (click)="onPageNavigation(navigationLinks.PREV)"> Prev </a></div>
+  <div class="col-md-1">Page {{currentPage}} of {{totalPages}}</div>
+  <div class="col-md-1"><a class="btn btn-primary  text-white" (click)="onPageNavigation(navigationLinks.NEXT)"> Next </a></div>
+  <div class="col-md-1"><a class="btn btn-primary  text-white"  (click)="onPageNavigation(navigationLinks.LAST)"> Last </a></div>
+</div>
+

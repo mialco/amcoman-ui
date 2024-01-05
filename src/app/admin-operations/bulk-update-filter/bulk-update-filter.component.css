@@ -1,0 +1,23 @@
+.env-buttons label.btn{
+    border: 1px #aca9a9 solid;
+    background-color: #f2f2f2;
+    padding: 0.1rem 0.3rem;
+    margin-bottom: 0;
+}
+
+.env-buttons label.btn.test-env.active{
+    background-color: #ffc107; /*same as btn-warning*/
+}
+.env-buttons label.btn.live-env.active{
+    background-color: #28a745; /*same as btn-success*/
+}
+
+.filter-options label.btn{
+    background-color: white;
+    border: 1px #aca9a9 solid;
+    
+}
+
+.filter-options label.btn.active{
+    background-color: #aca9a9;
+}

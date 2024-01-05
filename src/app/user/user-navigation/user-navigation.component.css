@@ -1,0 +1,13 @@
+.nav-link{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+nav{
+    background-color: #519872  !important;
+}
+
+.nav-item a {
+    color: white;
+}
+

@@ -4,6 +4,8 @@ import { LoginComponent } from '../../core/login/login.component';
 import { IdentityService } from '../../core/identity.service';
 import { AuthData } from '../../core/auth-data';
 import {BrandLogoComponent} from '../../core/brand-logo/brand-logo.component'
+import { routes } from '../../app.routes';
+import { RouterModule } from '@angular/router';
 
 // src/app/navigation/navigation.component.ts
 
@@ -21,6 +23,7 @@ import {BrandLogoComponent} from '../../core/brand-logo/brand-logo.component'
   selector: 'navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
+  
 })
 export class NavigationComponent {
 

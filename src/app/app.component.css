@@ -1,0 +1,7 @@
+.row{
+    min-height: 30em;
+}
+
+.temp{
+    border-width: 1px; border-color: red
+}

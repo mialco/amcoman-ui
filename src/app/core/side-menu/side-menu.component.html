@@ -1,7 +1,16 @@
 <!-- from https://www.codeply.com/go/q0b6ILuRyx/bootstrap-4-vertical-sidebar-nav-with-submenu -->
 
-<div class="collapse d-md-flex bg-light h-100" id="sidebar" *ngIf="isMenuExpanded">
-  <ul class="nav flex-column flex-nowrap w-100">
+  <div class="expand-button   pt-2"  *ngIf="!isMenuExpanded">
+    <a (click)="isMenuExpanded = true;" href="#"> &gt;&gt; </a>
+  </div>
+
+  <div class="collapse d-md-flex  h-200" id="sidebar"  style="opacity:0.5" *ngIf="isMenuExpanded">
+  <ul class="nav flex-column flex-nowrap">
+    <li (click)="isMenuExpanded=false;">
+      <a class="nav-link" title="Collapse side bar" href="#">
+        &lt;&lt;
+      </a>
+    </li>
     <li class="nav-item">
       <a class="nav-link " href="#" (click)="isCollapsed[0] = !isCollapsed[0]">By Affection 
         <span *ngIf="isCollapsed[0]"> ▴ </span> 
@@ -13,7 +22,7 @@
             <a class="nav-link py-1" href="">Aches and Pain</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link py-1" href="">Acne</a>
+            <a class="nav-link py-1" href="">Acne asdf a adf asd asdf asdf asdf asdf asdf as</a>
           </li>
           <li class="nav-item">
             <a class="nav-link py-1" href="">Allergy and Sinus</a>
@@ -21,12 +30,9 @@
           <li class="nav-item">
             <a class="nav-link py-1" href="">Arthritis</a>
           </li>
-
-
         </ul>
       </div>
     </li>
-
     <li class="nav-item">
       <a class="nav-link " href="#" (click)="isCollapsed[1] = !isCollapsed[1]">Supplements
           <span *ngIf="isCollapsed[1]"> ▴ </span> 
@@ -58,16 +64,6 @@
         </ul>
       </div>
     </li>
-
-    <li (click)="isMenuExpanded=false;">
-      <a class="nav-link" href="#">
-        &lt;&lt; Collapse
-      </a>
-    </li>
   </ul>
-
-
-</div>
-<div class="expand-button  bg-light pt-2 h-100" *ngIf="!isMenuExpanded">
-  <a (click)="isMenuExpanded = true;" href="#"> &gt;&gt; </a>
+  
 </div>

@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#userNavbarSupportedContent" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation" > (click)="collapsed=!collapsed">
+    <span class="navbar-toggler-icon"></span>
+  
+  </button>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#userNavbarSupportedContent" aria-controls="navbarSupportedContent"
+    aria-expanded="false" aria-label="Toggle navigation"  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- <div [ngClass]="{'collapse' : true, 'navbar-collapse' : true}" id="userNavbarSupportedContent"> -->
+  <div [ngClass]="{'collapse' : true, 'navbar-collapse' : true}" id="userNavbarSupportedContent">
+      <ul class="navbar-nav mx-auto">
+      <li class="nav-item">
+        <a routerLink="/add-products" class="nav-link" routerLinkActive="active">Add Products
+
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/bulk-update" href="#" class="nav-link" routerLinkActive="active">Bulk Update
+        </a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="/profile" class="nav-link" routerLinkActive="active">Profile</a>
+      </li>
+
+      <li class="nav-item">
+        <a routerLink="/manage-users" class="nav-link" routerLinkActive="active">Manage Users</a>
+      </li>
+    </ul>
+
+  </div>
+</nav>

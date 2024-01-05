@@ -1,0 +1,20 @@
+<bulk-update-filter (onFilterChange)="onFilterChange()">
+</bulk-update-filter>
+
+
+<div class="card my-2">
+  <div class="card-header">
+    Products  
+
+    <div class="pull-right">
+     <button class="btn btn-success btn-sm">Push To live [{{selectedRows.length}}]</button>
+     <button class="btn btn-danger  btn-sm">Delete [{{selectedRows.length}}] </button>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <bulk-update-data-table (onDataSourceChange)="onDataSourceChange($event)" (onRowSelection)="onTableRowSeletion($event)"></bulk-update-data-table>
+  </div>
+</div>
+
+<pagination [totalPages]="bulkUpdateService.totalPages" (onPageChanges)="onPageChanges($event)"></pagination>
