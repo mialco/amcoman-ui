@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { BrandLogoComponent } from './brand-logo/brand-logo.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { TruncateComponent } from './truncate/truncate.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductListComponent } from './product-list/product-list.component';
 
 
 
@@ -20,8 +22,10 @@ import { TruncateComponent } from './truncate/truncate.component';
     NgbModule,
     RouterModule
   ],
-  declarations: [MessageComponent, LoginComponent, BrandLogoComponent, SideMenuComponent, TruncateComponent],
-  exports: [MessageComponent,BrandLogoComponent,SideMenuComponent,TruncateComponent, LoginComponent]
+  declarations: [MessageComponent, LoginComponent, BrandLogoComponent, SideMenuComponent, TruncateComponent
+    ,ProductDetailsComponent,ProductListComponent],
+  exports: [MessageComponent,BrandLogoComponent,SideMenuComponent,TruncateComponent, LoginComponent
+    ,ProductDetailsComponent, ProductListComponent]
   //entryComponents:[LoginComponent]
 })
 export class CoreModule { }
