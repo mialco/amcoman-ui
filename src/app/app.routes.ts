@@ -10,7 +10,7 @@ import { ProductDetailsComponent } from './core/product-details/product-details.
    { path:'products/list',component: ProductListComponent},
    { path:'products/list/search',component: ProductListComponent},
    { path:'products/list/category/:id',component: ProductListComponent},
-   { path:'products/product-details/:id',component: ProductDetailsComponent},
+   { path:'product/:id',component: ProductDetailsComponent},
 
    { path: '**', component: HomeComponent },
 
