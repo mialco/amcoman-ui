@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ProductData } from '../product.data';
+import { ProductData } from '../product.interface';
 import { ProductsService } from '../products.service'
 
 @Component({
@@ -12,14 +12,33 @@ import { ProductsService } from '../products.service'
 export class ProductDetailsComponent implements OnInit {
 
   constructor (@Inject (ProductsService) private prs : ProductsService){
-    this.productData = new ProductData();
+    //this.productData = undefined ; //new ProductData();
   }
   ngOnInit(){ 
-    this.productData = this.prs.getProduct()  
+    this.prs.getProduct().subscribe((productData)=>{
+      this.productData=productData;
+    })  
   }
 
 
-  productData:ProductData;
+  productData:ProductData = 
+   {
+    id : 0,
+    productName : '',
+    description : '',
+    price:0.,
+    navigateUrl: '',
+    imgUrl: '',
+    additionalInfoTitle:'',
+    additionalInfoUrl: '',
+    advertiser:'',
+    advertizerLinkID:'', 
+    endDate:new Date(),
+    imgAlt :'',
+    imgDescription:'',
+    isActive :true,
+    linkCode:'',
+    startDate:new Date(),
+   }
 
-
-}
+ }

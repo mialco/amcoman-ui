@@ -1,10 +1,10 @@
 <p>product-details works!</p>
 <div Name="ProductDetailContainer" >
     <div class="row">
-        <div class="col-lg-4"><img  href="http://unclelouieshop.com/images/thumbs/0000013_2-facoffee-show-ceramic-mug_550.jpeg"  alt="{imageAlt}" ><a href="{{productData.link}}" ></a> </div>
+        <div class="col-lg-4"><a href="{{productData.navigateUrl}}" target="_blank" ><img  src ="{{productData.imgUrl}}"  alt="{{productData.description}}" ></a>  </div>
         <div class="col-lg-8">
             <div class="row">
-            <div class="center" style="margin-left: auto; margin-right: auto; position: relative;">{{productData.name}}</div>     
+            <div class="center" style="margin-left: auto; margin-right: auto; position: relative;"><a href="{{productData.navigateUrl}}" target="_blank">{{productData.productName}}</a></div>     
             </div>    
             <div class="row">
                 <div>Add to cart <Button></Button></div>
@@ -13,7 +13,7 @@
     </div>
     <div class="row">
         <div class="col-md-1 col-sm-0"></div>
-        <div class="col-md-10 col-sm-12">Product description</div>
+        <div class="col-md-10 col-sm-12">{{productData.description}}</div>
         <div class="col-md-1 col-sm-0" >2</div>
 
     </div>
