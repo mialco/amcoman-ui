@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class ProductsService {
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig, public http: HttpClient) { }
-  private baseUrl = 'https://localhost:7150/api/Products';
+  private baseUrl = `${this.config.apiEndpoint}/products`;
 
   // getMockProduct():ProductData
   // {
@@ -21,8 +21,8 @@ export class ProductsService {
   //   // return p;
   // }
 
-  getProduct():Observable<ProductData>{
-    return  this.http.get<ProductData>(`${this.baseUrl}/1`);
+  getProduct(productId:number):Observable<ProductData>{
+    return  this.http.get<ProductData>(`${this.baseUrl}/${productId}`);
   }
 
 }

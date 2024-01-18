@@ -54,7 +54,7 @@ import { routes } from './app.routes';
   providers: [provideRouter(routes)
     ,MessageService,{provide : HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true}
     ,IdentityService,{ provide: APP_CONFIG, useValue: Configurations }
-  ,ProductsService],
+  ,ProductsService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
