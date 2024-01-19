@@ -21,6 +21,10 @@ import { HomeComponent } from './basic/home/home.component';
 import { ContactusComponent } from './basic/contactus/contactus.component';
 
 import { routes } from './app.routes';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table'
+import { MatPaginatorModule} from '@angular/material/paginator'
+import { MatSortModule } from '@angular/material/sort'
 
 // const appRoutes: Routes = [
 //   { path: 'home', component: HomeComponent },
@@ -48,7 +52,11 @@ import { routes } from './app.routes';
     RouterOutlet,
     RouterLinkActive,
     RouterLink,
-    NgbModule,  //.forRoot(),  
+    NgbModule,
+    MatTableModule, 
+    MatPaginatorModule,
+    MatSortModule,
+    BrowserAnimationsModule,  //.forRoot(),  
   ],
   exports:[RouterModule],
   providers: [provideRouter(routes)

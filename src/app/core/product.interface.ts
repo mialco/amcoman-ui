@@ -1,6 +1,5 @@
 
 export interface ProductData {
-    // properties
     id : number;
     productName : string;
     description : string;

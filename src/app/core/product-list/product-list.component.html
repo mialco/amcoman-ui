@@ -1,1 +1,29 @@
 <p>product-list works!</p>
+<mat-table [dataSource]="productList" matSort matPaginator>
+        
+    <!-- <ng-container>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Column Header </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{ item.columnName }} </mat-cell>
+    </ng-container> -->
+
+    
+    <ng-container matColumnDef="productName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let product"><a title="More Details" href="product/{{product.id}}">{{ product.productName }}</a>  </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+        <mat-cell *matCellDef="let product"><a target="_blank" href="{{product.navigateUrl}}" title="Go to the product website"> {{ product.description }} </a></mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="image">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Image </mat-header-cell>
+        <mat-cell *matCellDef="let product"><a target="_blank" href="{{product.navigateUrl}}" > <img src="{{product.imgUrl}}" alt ={{product.productName}}>  </a></mat-cell>
+    </ng-container>
+    
+
+    <!-- Repeat for other columns -->
+    <!-- Header row and Data row -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+</mat-table>

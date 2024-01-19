@@ -12,6 +12,9 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
 import { TruncateComponent } from './truncate/truncate.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { MatTableModule } from '@angular/material/table'
+import { MatPaginatorModule} from '@angular/material/paginator'
+import { MatSortModule } from '@angular/material/sort'
 
 
 
@@ -20,7 +23,10 @@ import { ProductListComponent } from './product-list/product-list.component';
     FormsModule,
     CommonModule,
     NgbModule,
-    RouterModule
+    RouterModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   declarations: [MessageComponent, LoginComponent, BrandLogoComponent, SideMenuComponent, TruncateComponent
     ,ProductDetailsComponent,ProductListComponent],
