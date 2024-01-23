@@ -25,4 +25,13 @@ export class ProductsService {
     return  this.http.get<ProductData>(`${this.baseUrl}/${productId}`);
   }
 
+  getProducts (page:number, pageSize:number) :Observable<ProductData[]>  {
+    console.log('A call was made to get products')
+    var products  : ProductData[] = new Array<ProductData>;
+      var url:string = `${this.baseUrl}?pageindex=${page}&pagesize=${pageSize}`
+      var result = this.http.get<ProductData[]>(url)
+
+      return  result;
+  }
+
 }

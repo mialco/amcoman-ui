@@ -3,6 +3,8 @@ import { MatPaginator} from '@angular/material/paginator'
 import { MatSort } from '@angular/material/sort'
 import { ProductData } from '../product.interface';
 import { MatTableDataSource } from '@angular/material/table';
+import { ProductsService } from '../products.service';
+
 
 @Component({
   selector: 'app-product-list',
@@ -13,6 +15,11 @@ import { MatTableDataSource } from '@angular/material/table';
 export class ProductListComponent implements OnInit {
 
 
+  constructor (@Inject (ProductsService) private ps:ProductsService){
+
+
+
+  }
   productList!: MatTableDataSource<ProductData>;
   displayedColumns: string[] = ['productName', 'description', 'image'];
   
@@ -20,40 +27,13 @@ export class ProductListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   
   ngOnInit(){
-    //this.initMockData();
-    const products: ProductData[] = [
-      {id:1,productName:"product1",   description : 'My first product - mialco website',
-      price:1,
-      navigateUrl: 'https://mialco.com/e-commerce-installation-on-aws-basic-installation',
-      imgUrl: 'http://mialco.com/images/thumbs/0000091_e-commerce-installation-on-aws-basic-installation_415.jpeg',
-      additionalInfoTitle:'string',
-      additionalInfoUrl: 'string',
-      advertiser:'string',
-      advertizerLinkID:'string', 
-      endDate:new Date(),
-      imgAlt :'string',
-      imgDescription:'string',
-      isActive :true,
-      linkCode:'string',
-      startDate:new Date()
-   },
-   {id:2,productName:"product2",   description : 'My second product - Mialco.net',
-      price:2,
-      navigateUrl: 'https://demostore.mialco.net',
-      imgUrl: 'http://mialco.com/images/thumbs/0000090_complete-e-commerce-online-store-with-basic-hosting_415.jpeg',
-      additionalInfoTitle:'string',
-      additionalInfoUrl: 'string',
-      advertiser:'string',
-      advertizerLinkID:'string', 
-      endDate:new Date(),
-      imgAlt :'string',
-      imgDescription:'string',
-      isActive :true,
-      linkCode:'string',
-      startDate:new Date()
-   },   
-  ];
-  this.productList= new MatTableDataSource<ProductData>(products);
+  
+  this.productList = new MatTableDataSource<ProductData>(undefined);
+  
+  //var products = 
+  this.ps.getProducts(1,2).subscribe(result=>this.productList.data = result);
+  
+
   this.productList.paginator = this.paginator;
   this.productList.sort=this.sort;
 
@@ -99,3 +79,39 @@ export class ProductListComponent implements OnInit {
   this.productList.sort=this.sort;
   }
 }
+
+    //this.initMockData();
+/*
+    const products: ProductData[] = [
+      {id:1,productName:"product1",   description : 'My first product - mialco website',
+      price:1,
+      navigateUrl: 'https://mialco.com/e-commerce-installation-on-aws-basic-installation',
+      imgUrl: 'http://mialco.com/images/thumbs/0000091_e-commerce-installation-on-aws-basic-installation_415.jpeg',
+      additionalInfoTitle:'string',
+      additionalInfoUrl: 'string',
+      advertiser:'string',
+      advertizerLinkID:'string', 
+      endDate:new Date(),
+      imgAlt :'string',
+      imgDescription:'string',
+      isActive :true,
+      linkCode:'string',
+      startDate:new Date()
+   },
+   {id:2,productName:"product2",   description : 'My second product - Mialco.net',
+      price:2,
+      navigateUrl: 'https://demostore.mialco.net',
+      imgUrl: 'http://mialco.com/images/thumbs/0000090_complete-e-commerce-online-store-with-basic-hosting_415.jpeg',
+      additionalInfoTitle:'string',
+      additionalInfoUrl: 'string',
+      advertiser:'string',
+      advertizerLinkID:'string', 
+      endDate:new Date(),
+      imgAlt :'string',
+      imgDescription:'string',
+      isActive :true,
+      linkCode:'string',
+      startDate:new Date()
+   },   
+  ];
+  */
