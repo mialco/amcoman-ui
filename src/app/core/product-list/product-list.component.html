@@ -11,9 +11,11 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
         <mat-cell *matCellDef="let product"><a title="More Details" href="product/{{product.id}}">{{ product.productName }}</a>  </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="description">
+    <ng-container  matColumnDef="description">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
-        <mat-cell *matCellDef="let product"><a target="_blank" href="{{product.navigateUrl}}" title="Go to the product website"> {{ product.description }} </a></mat-cell>
+        <mat-cell *matCellDef="let product" [innerHtml]="sanitizeDescription(product.description)" title="Go to the product website">
+            <div><a style="z-index:1000;"  target="_blank" [href]="product.navigateUrl">Visit website</a> </div>
+        </mat-cell>
     </ng-container>
     <ng-container matColumnDef="image">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Image </mat-header-cell>

@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort'
 import { ProductData } from '../product.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductsService } from '../products.service';
-
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-product-list',
@@ -15,7 +15,9 @@ import { ProductsService } from '../products.service';
 export class ProductListComponent implements OnInit {
 
 
-  constructor (@Inject (ProductsService) private ps:ProductsService){
+  constructor (@Inject (ProductsService) private ps:ProductsService
+  ,private sanitizer: DomSanitizer
+  ){
 
 
 
@@ -39,6 +41,12 @@ export class ProductListComponent implements OnInit {
 
 
 }
+
+sanitizeDescription(description: string): SafeHtml {
+  
+  return this.sanitizer.bypassSecurityTrustHtml(description);
+}
+
 
   private initMockData(){
 
