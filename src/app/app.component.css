@@ -1,7 +1,38 @@
 .row{
-    min-height: 30em;
+    min-height: 3em;
 }
 
+.thin-divider{
+    border-top: 2px solid black;
+    min-height: 2px;
+}
 .temp{
     border-width: 1px; border-color: red
 }
+
+.disclosure-row{
+    min-height:auto ;
+    margin-top: 0.25em;
+    margin-bottom: 0.1em;
+}
+
+.bread-crumbs-row{
+    font-size: 1.2em;
+    font-weight: normal;
+    color: #3f51b5;
+    min-height:auto ;
+    margin-top: 0.25em;
+    margin-bottom: 0.1em;
+}
+.main-panel{
+    min-height: 65vh;
+    background-color: #f4f3ef;
+    overflow-y: auto;
+}   
+
+.sticky-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+

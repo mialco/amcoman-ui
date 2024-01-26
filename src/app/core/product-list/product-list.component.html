@@ -1,5 +1,6 @@
 <p>product-list works!</p>
 <mat-table [dataSource]="productList" matSort matPaginator >
+            <!-- change the table style to display the description in a better way -->
         
     <!-- <ng-container>
         <mat-header-cell *matHeaderCellDef mat-sort-header> Column Header </mat-header-cell>
@@ -13,8 +14,14 @@
     </ng-container>
     <ng-container  matColumnDef="description">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
-        <mat-cell *matCellDef="let product" [innerHtml]="sanitizeDescription(product.description)" title="Go to the product website">
-            <div><a style="z-index:1000;"  target="_blank" [href]="product.navigateUrl">Visit website</a> </div>
+        <mat-cell *matCellDef="let product"  title="Go to the product website">
+         
+            <!-- <div><a style="z-index:1000;"  target="_blank" [href]="product.navigateUrl">Visit website</a> </div>
+             -->
+            <div [innerHTML]="sanitizeDescription(product.description)"><br>Visit Website</div>
+            <hr>
+            <div class="row">Visit website</div>
+
         </mat-cell>
     </ng-container>
     <ng-container matColumnDef="image">
