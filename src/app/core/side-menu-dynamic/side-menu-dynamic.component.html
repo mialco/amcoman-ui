@@ -1,0 +1,60 @@
+
+<!-- <div>
+    <ul class="nav flex-column flex-nowrap">
+        <li class="nav-item" *ngFor="let item of menuItems; let i = index">
+            <a class="nav-link" href="#" (click)="item.isCollapsed = !item.isCollapsed">{{ item.title }}
+                <span *ngIf="item.isCollapsed"> ▴ </span> 
+                <span *ngIf="!item.isCollapsed"> ▾ </span> 
+            </a>
+            <div [ngbCollapse]="item.isCollapsed">
+                <ul class="flex-column pl-2 nav submenu">
+                    <li class="nav-item" *ngFor="let subItem of item.subItems">
+                        <a class="nav-link py-1" href="#">{{ subItem }}</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div> -->
+<div class="thin-divider"></div>
+<mat-selection-list #selectionList>
+    <mat-list-option *ngFor="let item of menuItems" [value]="item.itemData">
+      {{item.title}}
+    </mat-list-option>
+  </mat-selection-list>
+<!-- Dynamic component with bootstrap -->
+<!-- <div>
+    <ul class="nav flex-column flex-nowrap">
+        <li class="nav-item" *ngFor="let itemL1 of menuItems; let i = index">
+            <a class="nav-link" [href]="" (click)="itemL1.isCollapsed = !itemL1.isCollapsed"  >{{ itemL1.title }}
+                <span *ngIf="itemL1.isCollapsed"> ▴ </span> 
+                <span *ngIf="!itemL1.isCollapsed"> ▾ </span> 
+            </a>
+            <div [ngbCollapse]="itemL1.isCollapsed">
+                <ul class="flex-column pl-2 nav submenu nav-level-2">
+                    <li class="nav-item" *ngFor="let subItem of itemL1.itemsL1">
+                        <a class="nav-link py-1 " href="#" (click)="subItem.isCollapsed = !subItem.isCollapsed">{{ subItem.title }}
+                            <span *ngIf="subItem.isCollapsed"> ▴ </span> 
+                            <span *ngIf="!subItem.isCollapsed"> ▾ </span> 
+                        </a>
+                        <div [ngbCollapse]="subItem.isCollapsed">
+                            <ul class="flex-column pl-2 nav submenu nav-level-3">
+                                <li class="nav-item" *ngFor="let subSubItem of subItem.itemL1List">
+                                    <a class="nav-link py-1" [href]="subItem.itemData">{{ subSubItem }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div [ngbCollapse]="itemL1.isCollapsed">
+                <ul class="flex-column pl-2 nav submenu nav-level-2">
+                    <li class="nav-item" *ngFor="let leafItem of itemL1.levelOneList">
+                        <a class="nav-link py-1" href="#" [href]="">{{ leafItem }}</a>
+                    </li>
+                </ul>
+            </div>
+
+        </li>
+    </ul>
+</div> -->

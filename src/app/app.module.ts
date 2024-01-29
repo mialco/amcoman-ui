@@ -25,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table'
 import { MatPaginatorModule} from '@angular/material/paginator'
 import { MatSortModule } from '@angular/material/sort'
+import { MatListModule, MatListOption, MatSelectionList } from '@angular/material/list';
 
 // const appRoutes: Routes = [
 //   { path: 'home', component: HomeComponent },
@@ -56,6 +57,9 @@ import { MatSortModule } from '@angular/material/sort'
     MatTableModule, 
     MatPaginatorModule,
     MatSortModule,
+    // MatListModule,
+    // MatSelectionList,
+    // MatListOption,
     BrowserAnimationsModule,  //.forRoot(),  
   ],
   exports:[RouterModule],

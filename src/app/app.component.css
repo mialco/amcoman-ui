@@ -36,3 +36,12 @@
     width: 100%;
 }
 
+.side-menu-container {
+    display: flex;
+    flex-direction: column; /* This will make the children stack vertically */
+    /* background-color: #208d69 */
+}
+
+#sidebar {
+    flex-grow: 1;
+}

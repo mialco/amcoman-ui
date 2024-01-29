@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ProductData } from '../product.interface';
 import { ProductsService } from '../products.service'
 import { ActivatedRoute, Router} from '@angular/router'
@@ -15,6 +15,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor (@Inject (ProductsService) private prs : ProductsService, 
   private route:ActivatedRoute, private router: Router, private sanitizer : DomSanitizer){
   }
+
+  
   ngOnInit(){ 
 
     const productId:number = this.route.snapshot.params['id'];

@@ -15,6 +15,8 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { MatTableModule } from '@angular/material/table'
 import { MatPaginatorModule} from '@angular/material/paginator'
 import { MatSortModule } from '@angular/material/sort'
+import { SideMenuDynamicComponent } from './side-menu-dynamic/side-menu-dynamic.component';
+import {  MatListModule } from '@angular/material/list';
 
 
 
@@ -26,11 +28,12 @@ import { MatSortModule } from '@angular/material/sort'
     RouterModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatListModule
   ],
-  declarations: [MessageComponent, LoginComponent, BrandLogoComponent, SideMenuComponent, TruncateComponent
+  declarations: [MessageComponent, LoginComponent, BrandLogoComponent, SideMenuComponent,SideMenuDynamicComponent, TruncateComponent
     ,ProductDetailsComponent,ProductListComponent],
-  exports: [MessageComponent,BrandLogoComponent,SideMenuComponent,TruncateComponent, LoginComponent
+  exports: [MessageComponent,BrandLogoComponent,SideMenuComponent,SideMenuDynamicComponent,TruncateComponent, LoginComponent
     ,ProductDetailsComponent, ProductListComponent]
   //entryComponents:[LoginComponent]
 })
