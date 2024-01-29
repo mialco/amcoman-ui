@@ -10,6 +10,13 @@ import { FormsModule } from '@angular/forms';
 import { BrandLogoComponent } from './brand-logo/brand-logo.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { TruncateComponent } from './truncate/truncate.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductListComponent } from './product-list/product-list.component';
+import { MatTableModule } from '@angular/material/table'
+import { MatPaginatorModule} from '@angular/material/paginator'
+import { MatSortModule } from '@angular/material/sort'
+import { SideMenuDynamicComponent } from './side-menu-dynamic/side-menu-dynamic.component';
+import {  MatListModule } from '@angular/material/list';
 
 
 
@@ -18,10 +25,16 @@ import { TruncateComponent } from './truncate/truncate.component';
     FormsModule,
     CommonModule,
     NgbModule,
-    RouterModule
+    RouterModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatListModule
   ],
-  declarations: [MessageComponent, LoginComponent, BrandLogoComponent, SideMenuComponent, TruncateComponent],
-  exports: [MessageComponent,BrandLogoComponent,SideMenuComponent,TruncateComponent, LoginComponent]
+  declarations: [MessageComponent, LoginComponent, BrandLogoComponent, SideMenuComponent,SideMenuDynamicComponent, TruncateComponent
+    ,ProductDetailsComponent,ProductListComponent],
+  exports: [MessageComponent,BrandLogoComponent,SideMenuComponent,SideMenuDynamicComponent,TruncateComponent, LoginComponent
+    ,ProductDetailsComponent, ProductListComponent]
   //entryComponents:[LoginComponent]
 })
 export class CoreModule { }

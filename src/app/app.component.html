@@ -7,40 +7,106 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<navigation [authData]="authData"></navigation> 
-<user-navigation *ngIf="authData.isAdminLoggedIn"></user-navigation>
-<div class="container-fluid" >
- <div class="d-flex flex-row" >
-      <!-- <div class="row">  -->
-        <side-menu class="col-md-2 col-sm-1"></side-menu>
-        <div class="col">
-          <div class="temp">Search bar</div>
-          <affiliate-disclosure></affiliate-disclosure>
-          <router-outlet></router-outlet>            
+
+    <!-- create html with bootstrap with top navigation, left navigation and content area and footer.  -->
+
+    <navigation [authData]="authData"></navigation> 
+    <user-navigation *ngIf="authData.isAdminLoggedIn"></user-navigation>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row" note="Top Row">
+                    <div class="col-lg-2">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!--Small devider-->
+                                <div class="row thin-divider">
+                                     <div class="col-lg-12">
+                                        <a href="home">Home</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" >
+                                        <side-menu-dynamic ></side-menu-dynamic>
+                                    </div>
+                                </div>
+                                <!-- <div class="row"> -->
+                                    <!-- <div class="expand-button" *ngIf="!sideMenuState.isMenuExpanded"> -->
+                                    <!-- This one works with site menu -->
+                                        <!-- <a  class="expand-button" *ngIf="!sideMenuState.isMenuExpanded" (click)="sideMenuState.isMenuExpanded = true;" href="#"> &gt;&gt; </a> -->
+                                    
+                                        <!-- </div> -->
+                                    <!-- <div class="expand-button" *ngIf="sideMenuState.isMenuExpanded">
+                                        <a (click)="sideMenuState.isMenuExpanded = true;" href="#"> &gt;&gt;asdasd </a>
+                                    <div class="expand-button" *ngIf="!sideMenuState.isMenuExpanded"> -->
+                                                                  
+                                    <!-- <div class="col-lg-12"> instead of col-12 we use the collapse class -->
+                                    <!-- This one works with the dunamic menu -->
+                                        <!-- <a *ngIf="sideMenuState.isMenuExpanded" (click)="sideMenuState.isMenuExpanded = false;" href="#"> &lt;&lt;</a> -->
+                                    
+                                        <!-- <div class="d-md-flex h-100 w-100" id="sidebar" style="opacity:0.5" *ngIf="sideMenuState.isMenuExpanded">     -->
+                                    <!-- <div class="col-12" >     -->
+                                                <!-- This one workks with site menu -->
+                                        <!-- <a *ngIf="!sideMenuState.isMenuExpanded" (click)="sideMenuState.isMenuExpanded = true;" href="#"> &gt;&gt;asdasd </a> -->
+                                        <!-- <side-menu></side-menu> -->
+                                        <!-- <side-menu></side-menu> -->
+                                    <!-- </div> -->
+                                    <!-- This one works with site menu -->
+                                    <!-- <a *ngIf="sideMenuState.isMenuExpanded" (click)="sideMenuState.isMenuExpanded = false;" href="#">&lt;&lt;</a> -->
+
+                                <!-- </div> -->
+                                <!-- <div class="row">
+                                    <div class="col-lg-12">
+                                        <a href="about">About</a>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-10 "> -->
+                    <div class="col">
+                        <!-- <div class="row"> -->
+                            <div class="col">
+                                <div class="row  thin-divider">
+                                    <div class="col-lg-12" >
+                                    </div>
+                                </div>
+                                <!-- Disclosure  -->
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                      <affiliate-disclosure></affiliate-disclosure>
+                                  </div>
+                                </div>
+                                <div class="row thin-divider disclosure-row">
+                                    <div class="col-lg-12">
+                                    </div>
+                                </div>
+                                <div class="row bread-crumbs-row">
+                                <!-- current page and  bread crumbs  -->
+                                  <div class="col-lg-12">
+                                      Home
+                                  </div>
+                                </div>
+                                <div class="row search-bar-row">
+                                    <div class="col-lg-12">
+                                      Search bar
+                                    </div>
+                                </div>
+                                <div class="row main-panel">
+                                    <div class="col-lg-12">
+                                        <p><router-outlet></router-outlet></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 sticky-footer"><footer></footer></div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-      <footer></footer>
-    </div>
-</div>
 
 
-<!-- <main class="main">
-  <div class="content">
-    <div class="left-side">
-      <h1>Hello</h1>
-      <h1>Hello, {{ title }}</h1>
-      <p>Congratulations! Your app is running. 🎉</p>
-    </div>
-  </div>
-</main> -->
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-<!-- <router-outlet></router-outlet> -->

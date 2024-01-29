@@ -1,0 +1,23 @@
+<p>product-details works!</p>
+<div Name="ProductDetailContainer" >
+    <div class="row">
+        <div class="col-lg-4"><a href="{{productData.navigateUrl}}" target="_blank" ><img  src ="{{productData.imgUrl}}"  alt="{{productData.imgAlt}}" ></a>  </div>
+        <div class="col-lg-8">
+            <div class="row">
+                <div [innerHTML]="sanitizedHtmlDescription"></div>     
+            </div>    
+            <div class="row">
+                <div>Add to cart <Button></Button></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 col-sm-0"></div>
+        <div class="col-md-10 col-sm-12">{{productData.description}}</div>
+        <div class="col-md-1 col-sm-0" >2</div>
+
+    </div>
+    <div class="row">
+        This row is to display related products and "Other customers also viewed"
+    </div>
+</div>

@@ -8,6 +8,8 @@ import { BasicModule } from './basic/basic.module';
 import { CoreModule } from './core/core.module';
 
 import { provideRouter, Router } from '@angular/router';
+import { SideMenuState } from './side-menu-state';
+
 
 @Component({
   selector: 'app-root',
@@ -19,11 +21,17 @@ import { provideRouter, Router } from '@angular/router';
 
 export class AppComponent {
   title = 'Nutirents shopping';
-  authData: AuthData= new AuthData();
-  constructor(private identityService: IdentityService){
-    
+  authData: AuthData = new AuthData();
+  //isCollapsed: Array<boolean> = [false, false];
+  //isMenuExpanded: boolean = this.sideMenuState.isMenuExpanded;
+
+  constructor(private identityService: IdentityService, public sideMenuState: SideMenuState) {
+    this.sideMenuState.isCollapsed = [false];
   }
+
   ngOnInit() {
+    this.sideMenuState.isMenuExpanded = true;
+    //this.sideMenuState.isCollapsed = this.sideMenuState.isCollapsed;
     this.identityService.getAuthData().subscribe(data => {
       this.authData = data;
     });

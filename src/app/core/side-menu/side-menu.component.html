@@ -1,69 +1,70 @@
 <!-- from https://www.codeply.com/go/q0b6ILuRyx/bootstrap-4-vertical-sidebar-nav-with-submenu -->
-
-  <div class="expand-button   pt-2"  *ngIf="!isMenuExpanded">
+<!-- I need a side menu that woul work with dynamic dataSource -->
+  <!-- <div class="expand-button"  *ngIf="!isMenuExpanded">
     <a (click)="isMenuExpanded = true;" href="#"> &gt;&gt; </a>
-  </div>
+  </div> -->
 
-  <div class="collapse d-md-flex  h-200" id="sidebar"  style="opacity:0.5" *ngIf="isMenuExpanded">
-  <ul class="nav flex-column flex-nowrap">
-    <li (click)="isMenuExpanded=false;">
-      <a class="nav-link" title="Collapse side bar" href="#">
-        &lt;&lt;
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link " href="#" (click)="isCollapsed[0] = !isCollapsed[0]">By Affection 
-        <span *ngIf="isCollapsed[0]"> ▴ </span> 
-        <span *ngIf="!isCollapsed[0]"> ▾ </span> 
-      </a>
-      <div id="submenu1" [ngbCollapse]="isCollapsed[0]" aria-expanded="false">
-        <ul class="flex-column pl-2 nav submenu">
-          <li class="nav-item">
-            <a class="nav-link py-1" href="">Aches and Pain</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link py-1" href="">Acne asdf a adf asd asdf asdf asdf asdf asdf as</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link py-1" href="">Allergy and Sinus</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link py-1" href="">Arthritis</a>
-          </li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link " href="#" (click)="isCollapsed[1] = !isCollapsed[1]">Supplements
-          <span *ngIf="isCollapsed[1]"> ▴ </span> 
-          <span *ngIf="!isCollapsed[1]"> ▾ </span> 
-      </a>
-      <div id="submenu1" [ngbCollapse]="isCollapsed[1]" aria-expanded="false">
-        <ul class="flex-column pl-2 nav submenu">
-          <li class="nav-item">
-            <a class="nav-link py-1" href="">Aminoacids</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link py-1" href="">Antioxidants</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link py-1" href="">Bones, Joints and Muscles</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link py-1" href="">Fibers</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link py-1" href="">50+</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link py-1" href="">Man's Health</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link py-1" href="">Nervous System</a>
-          </li>
-        </ul>
-      </div>
-    </li>
-  </ul>
-  
-</div>
+  <!-- I want the collapseble nav bar to fill the entire column -->
+  <!-- <div class="collapse d-md-flex h-100  w-100" id="sidebar"  style="opacity:0.5" *ngIf="isMenuExpanded"> -->
+  <div>
+    <ul class="nav flex-column flex-nowrap">
+      <li (click)="sideMenuState.isMenuExpanded=false;">
+        <!-- <a class="nav-link" title="Collapse side bar" href="#">
+          &lt;&lt;
+        </a> -->
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#" (click)="sideMenuState.isCollapsed[0] = !sideMenuState.isCollapsed[0]">By Affection 
+          <span *ngIf="sideMenuState.isCollapsed[0]"> ▴ </span> 
+          <span *ngIf="!sideMenuState.isCollapsed[0]"> ▾ </span> 
+        </a>
+        <div id="submenu1" [ngbCollapse]="sideMenuState.isCollapsed[0]" aria-expanded="false">
+          <ul class="flex-column pl-2 nav submenu">
+            <li class="nav-item">
+              <a class="nav-link py-1" href="">Aches and Pain</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link py-1" href="">Acne asdf a adf asd asdf asdf asdf asdf asdf as</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link py-1" href="">Allergy and Sinus</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link py-1" href="">Arthritis</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="#" (click)="sideMenuState.isCollapsed[1] = !sideMenuState.isCollapsed[1]">Supplements
+            <span *ngIf="sideMenuState.isCollapsed[1]"> ▴ </span> 
+            <span *ngIf="!sideMenuState.isCollapsed[1]"> ▾ </span> 
+        </a>
+        <div id="submenu1" [ngbCollapse]="sideMenuState.isCollapsed[1]" aria-expanded="false">
+          <ul class="flex-column pl-2 nav submenu">
+            <li class="nav-item">
+              <a class="nav-link py-1" href="">Aminoacids</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link py-1" href="">Antioxidants</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link py-1" href="">Bones, Joints and Muscles</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link py-1" href="">Fibers</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link py-1" href="">50+</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link py-1" href="">Man's Health</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link py-1" href="">Nervous System</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+</div>  

@@ -8,6 +8,7 @@ import { CoreModule } from './core/core.module';
 import { BasicModule } from './basic/basic.module';
 import { MessageService } from './core/message.service';
 import { IdentityService } from './core/identity.service';
+import { ProductsService } from './core/products.service';
 import { APP_CONFIG, Configurations } from './app-config';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -18,7 +19,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive, RouterModule, RouterOutlet, Routes, provideRouter } from '@angular/router';
 import { HomeComponent } from './basic/home/home.component';
 import { ContactusComponent } from './basic/contactus/contactus.component';
+
 import { routes } from './app.routes';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table'
+import { MatPaginatorModule} from '@angular/material/paginator'
+import { MatSortModule } from '@angular/material/sort'
+import { MatListModule, MatListOption, MatSelectionList } from '@angular/material/list';
 
 // const appRoutes: Routes = [
 //   { path: 'home', component: HomeComponent },
@@ -46,10 +53,20 @@ import { routes } from './app.routes';
     RouterOutlet,
     RouterLinkActive,
     RouterLink,
-    NgbModule,  //.forRoot(),  
+    NgbModule,
+    MatTableModule, 
+    MatPaginatorModule,
+    MatSortModule,
+    // MatListModule,
+    // MatSelectionList,
+    // MatListOption,
+    BrowserAnimationsModule,  //.forRoot(),  
   ],
   exports:[RouterModule],
-  providers: [provideRouter(routes),MessageService,{provide : HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},IdentityService,{ provide: APP_CONFIG, useValue: Configurations }],
+  providers: [provideRouter(routes)
+    ,MessageService,{provide : HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true}
+    ,IdentityService,{ provide: APP_CONFIG, useValue: Configurations }
+  ,ProductsService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
