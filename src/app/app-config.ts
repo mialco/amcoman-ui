@@ -7,7 +7,7 @@ export const Configurations: IAppConfig = {
     //identityEndPointAzure : 'http://ec2-18-216-130-34.us-east-2.compute.amazonaws.com:83/api',
     apiEndpoint: 'https://localhost:7150/api',
     //apiEndpoint: 'http://ec2-18-216-130-34.us-east-2.compute.amazonaws.com:83/api/',
-    identityEndPoint : 'http://ec2-18-216-130-34.us-east-2.compute.amazonaws.com:82/',
+    identityEndPoint : 'https://localhost:7150/api',
     userClientId : 'roclient',
     defaltHttpOptions : { headers : {'Content-Type' : 'application/json'}},
     applicationClientId : 'nutrientsClient',

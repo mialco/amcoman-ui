@@ -46,15 +46,18 @@
     </ul>
 
     <ul class="navbar-nav">
-      <li *ngIf="!authData.isAdminLoggedIn" class="nav-item">
+      <li *ngIf="isLoggedOut$ |async" class="nav-item">
         <a class="nav-link" href="#" (click)="open()">Login</a>
       </li>
-      <li *ngIf="authData.isAdminLoggedIn" class="nav-item">
+      <li *ngIf="isLoggedIn$ | async" class="nav-item">
         <a class="nav-link" routerLinkActive="active">{{authData.username}} </a>
       </li>
-      <li *ngIf="authData.isAdminLoggedIn" class="nav-item">
+      <li *ngIf="isLoggedIn$ | async" class="nav-item">
         <a class="nav-link" href="#" routerLinkActive="active" (click)="logout()">Logout </a>
       </li>
+      <li>Is LoggedId: {{isLoggedIn$ | async}}</li>
+      <li>IsLoggedOut {{isLoggedOut$ | async}}</li>
+      <li *ngIf="authData.username ">Account: :{{authData.username}}</li>
     </ul>
     <!-- <form class="form-inline my-2 my-lg-0">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

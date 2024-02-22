@@ -9,7 +9,7 @@ import { CoreModule } from './core/core.module';
 
 import { provideRouter, Router } from '@angular/router';
 import { SideMenuState } from './side-menu-state';
-
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +20,7 @@ import { SideMenuState } from './side-menu-state';
 
 
 export class AppComponent {
+  user$:Observable<AuthData> | undefined;
   title = 'Nutirents shopping';
   authData: AuthData = new AuthData();
   //isCollapsed: Array<boolean> = [false, false];
@@ -32,6 +33,7 @@ export class AppComponent {
   ngOnInit() {
     this.sideMenuState.isMenuExpanded = true;
     //this.sideMenuState.isCollapsed = this.sideMenuState.isCollapsed;
+    this.user$ = this.identityService.user$;
     this.identityService.getAuthData().subscribe(data => {
       this.authData = data;
     });

@@ -26,6 +26,7 @@ import { MatTableModule } from '@angular/material/table'
 import { MatPaginatorModule} from '@angular/material/paginator'
 import { MatSortModule } from '@angular/material/sort'
 import { MatListModule, MatListOption, MatSelectionList } from '@angular/material/list';
+//import 'rxjs/add/operator/switchMap';
 
 // const appRoutes: Routes = [
 //   { path: 'home', component: HomeComponent },
@@ -57,9 +58,6 @@ import { MatListModule, MatListOption, MatSelectionList } from '@angular/materia
     MatTableModule, 
     MatPaginatorModule,
     MatSortModule,
-    // MatListModule,
-    // MatSelectionList,
-    // MatListOption,
     BrowserAnimationsModule,  //.forRoot(),  
   ],
   exports:[RouterModule],

@@ -6,7 +6,7 @@ import { RouterModule,Route } from '@angular/router'
 
 import { MessageComponent } from './message/message.component';
 import { LoginComponent } from './login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { BrandLogoComponent } from './brand-logo/brand-logo.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { TruncateComponent } from './truncate/truncate.component';
@@ -17,7 +17,10 @@ import { MatPaginatorModule} from '@angular/material/paginator'
 import { MatSortModule } from '@angular/material/sort'
 import { SideMenuDynamicComponent } from './side-menu-dynamic/side-menu-dynamic.component';
 import {  MatListModule } from '@angular/material/list';
-
+import { SideMenuTreeComponent } from './side-menu-tree/side-menu-tree.component';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -29,11 +32,16 @@ import {  MatListModule } from '@angular/material/list';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatListModule
+    MatListModule,
+    MatTreeModule,
+    MatIconModule,
+    MatButtonModule
+    //FormsModule,
+    //FormControl
   ],
-  declarations: [MessageComponent, LoginComponent, BrandLogoComponent, SideMenuComponent,SideMenuDynamicComponent, TruncateComponent
+  declarations: [MessageComponent, LoginComponent, BrandLogoComponent, SideMenuTreeComponent, SideMenuComponent,SideMenuDynamicComponent, TruncateComponent
     ,ProductDetailsComponent,ProductListComponent],
-  exports: [MessageComponent,BrandLogoComponent,SideMenuComponent,SideMenuDynamicComponent,TruncateComponent, LoginComponent
+  exports: [MessageComponent,BrandLogoComponent,SideMenuComponent,SideMenuTreeComponent,SideMenuDynamicComponent,TruncateComponent, LoginComponent
     ,ProductDetailsComponent, ProductListComponent]
   //entryComponents:[LoginComponent]
 })

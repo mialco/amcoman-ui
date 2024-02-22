@@ -33,35 +33,7 @@ export class SideMenuDynamicComponent implements OnInit, AfterViewInit{
     }
 
 
-//   menuItems = [
-//     {
-//         title: 'By Affection',
-//         isCollapsed: false,
-//         subItems: [
-//           {title: 'submenu', isCollapsed: true, subItems :['more aches', 'more acne']}
-//           ,'Aches and Pain', 'Acne', 'Allergy and Sinus', 'Arthritis']
-//     },
-//     {
-//         title: 'Supplements',
-//         isCollapsed: false,
-//         subItems: ['Vitamin A', 'Vitamin B', 'Vitamin C', 'Vitamin D']
-//     },
-//     {
-//       title: 'Supplements No subitems',
-//       isCollapsed: false,
-//       subItems: []
-//   }
-
-//     // Add more items as needed
-// ];
-
-
-// items = [
-//   {name: 'Item 1', value: 1},
-//   {name: 'Item 2', value: 2},
-//   // Add more items as needed
-// ];
-
+    
 menuItems: {
   title: string; 
   isCollapsed:boolean; 
@@ -72,7 +44,7 @@ menuItems: {
         itemData: string ;
         itemL1List: string[];
       }];
-    levelOneList?:string[];} [] = [
+    levelOneList:string[];} [] = [
   {
     title: 'By Affection',
     isCollapsed: false,
@@ -98,7 +70,8 @@ menuItems: {
         itemData: 'Category 2.1',
         itemL1List: ['more Vitamin A1', 'more Vitamin A2']
       }
-    ]
+    ],
+    levelOneList: ['Level One List Item 1', 'Level One List Item 2', 'Level One List Item 3']
   },
 
   {

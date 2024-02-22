@@ -11,7 +11,8 @@
     <!-- create html with bootstrap with top navigation, left navigation and content area and footer.  -->
 
     <navigation [authData]="authData"></navigation> 
-    <user-navigation *ngIf="authData.isAdminLoggedIn"></user-navigation>
+    <!-- <user-navigation *ngIf="authData.isAdminLoggedIn"></user-navigation> -->
+    <user-navigation ></user-navigation>
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -27,7 +28,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12" >
-                                        <side-menu-dynamic ></side-menu-dynamic>
+                                        <side-menu-tree></side-menu-tree>
                                     </div>
                                 </div>
                                 <!-- <div class="row"> -->
@@ -64,7 +65,7 @@
                         </div>
                     </div>
                     <!-- <div class="col-lg-10 "> -->
-                    <div class="col">
+                    <div class="col-lg-10">
                         <!-- <div class="row"> -->
                             <div class="col">
                                 <div class="row  thin-divider">

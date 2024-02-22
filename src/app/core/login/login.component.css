@@ -1,3 +1,14 @@
 .login-note{
     font-size: 14px;
 }
+
+.container{
+    margin-top: 2px;
+    display : flex;
+}   
+
+.right-align{
+    margin-left: auto;
+}
+
+
