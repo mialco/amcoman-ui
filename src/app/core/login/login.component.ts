@@ -4,8 +4,9 @@ import { APP_CONFIG, IAppConfig } from '../../app-config';
 import { IdentityService } from '../identity.service';
 import { MessageService, MessageType } from '../message.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { userLoginVm } from '../model/userLoginVm';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'login',
@@ -130,13 +131,16 @@ export class LoginComponent implements OnInit {
     console.log("is login called");
     console.log(loginData);
 
-    this.identityService.login(loginData).subscribe(
-      data => {
-        this.activeModal.close();
-      },
-      error => {
-        this.messageService.push(MessageType.DANGER, "error in promise");
-      });
+    this.identityService.login(loginData)
+    // .  .(
+    //   tap(data => {
+    //     this.activeModal.close();
+    //   }),
+    //   catchError(error => {
+    //     this.messageService.push(MessageType.DANGER, "error in promise");
+    //     return EMPTY;
+    //   })
+    // );
     // this.identityService.login((loginData)=>{
     //   this.activeModal.close();
     // },(error)=>{

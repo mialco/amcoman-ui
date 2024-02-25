@@ -10,9 +10,10 @@ export class AuthData {
     isAdminLoggedIn: boolean = false;
     isLoggedIn: boolean = false;
     roles: string[] = [];
+    token: AuthToken | undefined;
 
     constructor(token? : AuthToken) {
-  
+      console.log('AuthData is created');
        if (token === undefined || token.token === undefined ) {
         console.log('Empty Token is loaded in the constructor of authData: Will try to get it from storage' + JSON.stringify(token));
         var localTokenString=localStorage.getItem("token");
@@ -27,6 +28,7 @@ export class AuthData {
           this.roles = [];
           this.email = undefined;
           this.isAdminLoggedIn=false;
+          this.token = undefined;
           return;
         }
         else
@@ -34,6 +36,7 @@ export class AuthData {
         this.isLoggedIn=true;
         this.username = localStorage.getItem("username") ?? "";
         this.roles = JSON.parse(localStorage.getItem("roles") ?? "[]");
+        this.token = localToken;
        }
       }
       else{
@@ -49,21 +52,24 @@ export class AuthData {
             console.log('Token is loaded from local storage but I believe is empty: ' + localToken);
             token.token = localToken.token;
             this.username = localStorage.getItem("username") ?? "";
-            this.roles = JSON.parse(localStorage.getItem("roles") ?? "[]");            
+            this.roles = JSON.parse(localStorage.getItem("roles") ?? "[]");
+            this.token = localToken;            
           }
           else{
-            console.log('Token is loaded from local storage is emty so we are looging out');
+            console.log('Token is loaded from local storage is emty so we are loging out');
             this.isLoggedIn=false;
             this.username = undefined;
             this.roles = [];
             this.email = undefined;
             this.isAdminLoggedIn=false;
+            this.token = undefined;
             return;
           }
           // Do something if the token is an instance of AuthData and has an access_token property
         }
         else{ //Token is not undefined so it was passed in
           this.saveToken(token);
+        //saveToken will also set the username, email and roles
         } 
       }
      
@@ -89,6 +95,7 @@ export class AuthData {
       console.log('Storing Token: ' + JSON.stringify(token));
       console.log('Storing Token Acceess_tOKEN: ' + JSON.stringify(token));
       if (token) {
+      this.token
       var userClaims : any= this.decodeToken(token.token);
       console.log('Storing TokenVm in local storage: ' + JSON.stringify(userClaims));
       if (userClaims)
@@ -96,6 +103,9 @@ export class AuthData {
         this.username = userClaims.sub;
         this.email = userClaims.email;
         this.isAdminLoggedIn= userClaims.role === 'Admin';
+        localStorage.setItem("username", this.username ?? "");
+        localStorage.setItem("email", this.email ?? "");
+        localStorage.setItem("roles", JSON.stringify(this.roles));  
         console.log('user in local storage: ' + userClaims.sub);
         console.log('email in local storage: ' + userClaims.email);
         console.log('role in local storage: ' + userClaims.role);

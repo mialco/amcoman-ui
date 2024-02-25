@@ -35,7 +35,8 @@ export class NavigationComponent implements OnInit{
   isLoggedOut$ !: Observable<boolean> ;
   
   constructor(private modelService : NgbModal, public identityService : IdentityService) { 
-    
+      console.log('Navigation component is created. Thus us using AuthData:  as well');
+
   }
 
   //login

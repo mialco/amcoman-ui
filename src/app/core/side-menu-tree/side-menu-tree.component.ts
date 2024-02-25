@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { ProductsService } from '../products.service';
+import { TreeNode } from '../tree-node.interface';
 
 @Component({
   selector: 'side-menu-tree',
@@ -10,12 +12,18 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 
 
 
-export class SideMenuTreeComponent {
+export class SideMenuTreeComponent implements OnInit{
   treeControl = new NestedTreeControl<TreeNode>(node => node.children);
   dataSource = new MatTreeNestedDataSource<TreeNode>();
 
-  constructor() {
-    this.dataSource.data = TREE_DATA;
+  constructor(public productService: ProductsService) {
+
+  }
+  
+  ngOnInit(): void {
+  //this.dataSource.data = TREE_DATA;
+  this.productService.getCategoryTree([1,2,3,4,5]).subscribe(data => {  this.dataSource.data = data; })
+
   }
 
   hasChild = (_: number, node: TreeNode) => !!node.children && node.children.length > 0;
@@ -26,14 +34,8 @@ export class SideMenuTreeComponent {
 }
   
 
-interface TreeNode {
-  id?: number;
-  name: string;
-  children?: TreeNode[];
-  //selected?: boolean;
-  //control?: FormControl;
 
-}
+  
 
   const TREE_DATA: TreeNode[] = [
     {

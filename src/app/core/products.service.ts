@@ -3,6 +3,7 @@ import { APP_CONFIG , IAppConfig} from '../app-config';
 import { HttpClient } from '@angular/common/http';
 import { ProductData } from './product.interface';
 import { Observable } from 'rxjs';
+import { TreeNode } from './tree-node.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class ProductsService {
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig, public http: HttpClient) { }
   private baseUrl = `${this.config.apiEndpoint}/products`;
-
+  
   // getMockProduct():ProductData
   // {
   //   // var p= new ProductData();
@@ -34,4 +35,16 @@ export class ProductsService {
       return  result;
   }
 
+  getCategoryTree(groupIdsFilter: number[]):Observable<TreeNode[]>{ 
+    let groupsFilter = '';
+    if (groupIdsFilter.length > 0) {
+      groupsFilter = groupIdsFilter.join(',');
+    }
+    return this.http.get<TreeNode[]>(this.buildCategoryTreeApiUrl(groupsFilter));
+  }
+
+
+  private buildCategoryTreeApiUrl(groupsFilter: string):string {
+    return `${this.config.apiEndpoint}/categories/tree?groups=${groupsFilter}`;
+  }
 }

@@ -12,6 +12,7 @@ import {  userLoginVm } from './model/userLoginVm';
 import { JsonPipe } from '@angular/common';
 import { UserTokenVm } from './model/userTokenVm';
 import { AuthToken } from './auth-token';
+import { HttpHeaders } from '@angular/common/http';
 
 export const ANONYMOUS_USER : AuthData = new AuthData(
   {
@@ -40,22 +41,37 @@ export class IdentityService {
   
   
   //#region API to get Tokens
-  login(loginData:userLoginVm): Observable<AuthData> {
-
-    //As CORS is not enabled on identity Server this api will respond 400
+  login(loginData:userLoginVm) {     //: Observable<AuthData| undefined> {
+      //As CORS is not enabled on identity Server this api will respond 400
     // And on API server the Account/Login api returns 500
-    var authData = new AuthData({token: undefined,refreshToken: undefined,expiresAt: undefined });
-    this.http.post<AuthToken>(this.buildLoginApiUrl() , loginData).pipe(
-      tap(token => {
-        //this.user$  .subscribe(data => {Userdata.username = loginData.userName;});
-        //authData.
-        this.authDataSubject.next(new AuthData(token));
-        // console.log('Token: ' + token);
-        this.user$.pipe(map(data => {data.username = loginData.userName;}));
-          
-      }));
-      return of( authData );
+    //var authData = new AuthData({token: undefined,refreshToken: undefined,expiresAt: undefined });
+    var authData! : AuthData 
+    var url = this.buildLoginApiUrl()
+    console.log('Login data sent to api: ' + url  +  ' ' +   JSON.stringify(loginData));
+    //How do I add headers to this post request
+    
+    // ...
 
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    //this.http.get(url, { headers }).subscribe(data => {console.log('Data: ' + JSON.stringify(data));});
+    //this.http.post<AuthToken>(url,loginData, { headers }).pipe(
+    return this.http.post(url,loginData).
+      subscribe(data => {
+          console.log('Data: ' + JSON.stringify(data));
+      }        
+        );
+    // this.http.post(url,loginData).pipe(
+    //     tap(token => {
+    //     //this.user$  .subscribe(data => {Userdata.username = loginData.userName;});
+    //     authData = new AuthData(token as AuthToken);
+    //     return of(authData);        
+    //     //this.authDataSubject.next(new AuthData(token));
+    //     // console.log('Token: ' + token);
+    //     this.user$.pipe(map(data => {data.username = loginData.userName;}));
+          
+    //   }));
+    //   return of (undefined)
+      
       //map<UserTokenVm>(token => {console.log('Token: ' + JSON.stringify(token)); return new AuthData(token);}),;
   }
 

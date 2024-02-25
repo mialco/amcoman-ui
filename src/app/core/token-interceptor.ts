@@ -16,7 +16,9 @@ import { AuthData } from './auth-data';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-    constructor(private injector : Injector) { }
+    constructor(private injector : Injector) { 
+        console.log('Token Interceptor is created');
+    }
     
     
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

@@ -31,6 +31,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    console.log('App component is created and using AuthData' );
     this.sideMenuState.isMenuExpanded = true;
     //this.sideMenuState.isCollapsed = this.sideMenuState.isCollapsed;
     this.user$ = this.identityService.user$;
