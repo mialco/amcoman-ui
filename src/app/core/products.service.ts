@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ProductData } from './product.interface';
 import { Observable } from 'rxjs';
 import { TreeNode } from './tree-node.interface';
+import { CategoryGroup } from './category-group';
 
 @Injectable({
   providedIn: 'root'
@@ -43,8 +44,15 @@ export class ProductsService {
     return this.http.get<TreeNode[]>(this.buildCategoryTreeApiUrl(groupsFilter));
   }
 
+  getCategoryGroupsView():Observable<CategoryGroup[]>{
+    return this.http.get<CategoryGroup[]>(this.buildCatgoryGroupsViewApiUrl());
+  } 
 
   private buildCategoryTreeApiUrl(groupsFilter: string):string {
     return `${this.config.apiEndpoint}/categories/tree?groups=${groupsFilter}`;
+  }
+
+  private buildCatgoryGroupsViewApiUrl():string {
+    return `${this.config.apiEndpoint}/categories/groups/view`;
   }
 }

@@ -1,0 +1,19 @@
+<a mat-raised-button href="#">Update</a>
+<mat-accordion>   
+<mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <span>Category Groups</span>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-selection-list >
+            @for (option of selectedOptions; track option.id){
+                <mat-list-option [value]="option.id">
+                    {{option.groupName}}
+                </mat-list-option>
+            }
+        </mat-selection-list>
+
+
+    </mat-expansion-panel>
+</mat-accordion>

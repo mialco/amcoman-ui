@@ -21,7 +21,9 @@ import { SideMenuTreeComponent } from './side-menu-tree/side-menu-tree.component
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-
+import { CategoryGroupsComponent } from './category-groups/category-groups.component';
+import { MatAccordion } from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   imports: [
@@ -35,14 +37,15 @@ import { MatButtonModule } from '@angular/material/button';
     MatListModule,
     MatTreeModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatExpansionModule,
     //FormsModule,
     //FormControl
   ],
   declarations: [MessageComponent, LoginComponent, BrandLogoComponent, SideMenuTreeComponent, SideMenuComponent,SideMenuDynamicComponent, TruncateComponent
-    ,ProductDetailsComponent,ProductListComponent],
+    ,ProductDetailsComponent,ProductListComponent,     CategoryGroupsComponent ],
   exports: [MessageComponent,BrandLogoComponent,SideMenuComponent,SideMenuTreeComponent,SideMenuDynamicComponent,TruncateComponent, LoginComponent
-    ,ProductDetailsComponent, ProductListComponent]
+    ,ProductDetailsComponent, ProductListComponent, CategoryGroupsComponent]
   //entryComponents:[LoginComponent]
 })
 export class CoreModule { }
