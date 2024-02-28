@@ -38,9 +38,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatTreeModule,
     MatIconModule,
     MatButtonModule,
-    MatExpansionModule,
-    //FormsModule,
-    //FormControl
+    MatExpansionModule,    
   ],
   declarations: [MessageComponent, LoginComponent, BrandLogoComponent, SideMenuTreeComponent, SideMenuComponent,SideMenuDynamicComponent, TruncateComponent
     ,ProductDetailsComponent,ProductListComponent,     CategoryGroupsComponent ],

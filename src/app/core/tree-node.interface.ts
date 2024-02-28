@@ -4,6 +4,7 @@ export interface TreeNode {
     children?: TreeNode[];
     description?: string;
     parentId?: number;
+    selected?: boolean;
     //selected?: boolean;
     //control?: FormControl;
   

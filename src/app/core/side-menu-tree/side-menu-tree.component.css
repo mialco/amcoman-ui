@@ -27,3 +27,7 @@
     padding-left: 40px;
   }
   
+  .selected {
+    background-color: #ccc;
+    font-weight: bold;
+  }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 import { CategoryGroup } from '../category-group';
 import { ProductsService } from '../products.service';
 @Component({
@@ -6,7 +6,8 @@ import { ProductsService } from '../products.service';
   templateUrl: './category-groups.component.html',
   styleUrl: './category-groups.component.css'
 })
-export class CategoryGroupsComponent {
+export class CategoryGroupsComponent
+{
 
   constructor( private productsService :ProductsService) { }
   selectedOptions: CategoryGroup[] = new Array<CategoryGroup>();
@@ -18,4 +19,11 @@ export class CategoryGroupsComponent {
       }
     )
   }
+
+  groupSelected(group: CategoryGroup) {
+    group.selected = !group.selected;
+    this.productsService.selectedGroups.set(group.id, group.selected);
+  }
+
+
 }

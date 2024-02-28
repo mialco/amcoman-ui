@@ -3,8 +3,15 @@
   <!-- There is inline padding applied to this node using styles.
     This padding value depends on the mat-icon-button width. -->
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-      {{node.name}}
-  </mat-tree-node>
+      <a routerLink="" 
+      (click)="node.selected = !node.selected"
+      (click)="treeClicked(node)"
+      [ngClass]="{'selected' : node.selected}"
+      >
+        
+        
+        {{node.name}}</a>
+    </mat-tree-node>
   <!-- This is the tree node template for expandable nodes -->
   <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
       <div class="mat-tree-node">
@@ -14,7 +21,8 @@
             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
           </mat-icon>
         </button>
-        {{node.name}}
+        <!-- {{node.name}} -->
+        <a [routerLinkActive]="['active']" [routerLink]="[node.link]">{{node.name}}</a>
       </div>
 
       <!-- There is inline padding applied to this div using styles.

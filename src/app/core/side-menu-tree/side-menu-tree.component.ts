@@ -16,10 +16,12 @@ export class SideMenuTreeComponent implements OnInit{
   treeControl = new NestedTreeControl<TreeNode>(node => node.children);
   dataSource = new MatTreeNestedDataSource<TreeNode>();
 
-  constructor(public productService: ProductsService) {
+  constructor(private productService: ProductsService) {
 
   }
-  
+
+  //private selectedNodes : Map<number, boolean>  = new Map<number, boolean>();
+
   ngOnInit(): void {
   //this.dataSource.data = TREE_DATA;
   this.productService.getCategoryTree([1,2,3,4,5]).subscribe(data => {  this.dataSource.data = data; })
@@ -31,11 +33,27 @@ export class SideMenuTreeComponent implements OnInit{
   toggleSelection(node: TreeNode) {
     //node.selected = !node.selected;
   }
+
+  treeClicked(node: TreeNode): void {
+
+    console.log("Tree clicked: " + node.name + " " + node.selected);
+    let nodeId = node.id||-1;
+    let selected = false
+    if (node.selected == undefined )
+    {
+      selected = false;
+    }
+    else
+    {
+      selected = node.selected;
+    }
+    this.productService.selectedNodes.set(nodeId, selected);
+    console.log("Tree clicked: " + node.name + " " + this.productService.selectedNodes.get(nodeId));  
+  }
+ 
 }
-  
 
-
-  
+ 
 
   const TREE_DATA: TreeNode[] = [
     {

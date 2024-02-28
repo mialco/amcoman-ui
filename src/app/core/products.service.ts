@@ -23,6 +23,10 @@ export class ProductsService {
   //   // return p;
   // }
 
+
+  selectedNodes : Map<number, boolean>  = new Map<number, boolean>();
+  selectedGroups : Map<number,boolean> = new Map  <number,boolean>();
+
   getProduct(productId:number):Observable<ProductData>{
     return  this.http.get<ProductData>(`${this.baseUrl}/${productId}`);
   }
