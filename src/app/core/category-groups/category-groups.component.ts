@@ -13,16 +13,33 @@ export class CategoryGroupsComponent
   selectedOptions: CategoryGroup[] = new Array<CategoryGroup>();
 
   ngOnInit() {
-  this.productsService.getCategoryGroupsView().subscribe(
+    console.log('CategoryGroupsComponent ngOnInit');
+    this.productsService.getCategoryGroupsView().subscribe(
       (data: CategoryGroup[]) => {
+        // data.forEach(element => {
+        //     element.selected = true;
+        //     this.productsService.selectedGroups.set(element.id, element.selected);
+        // });
         this.selectedOptions = data;
+
+        //And I want to esure that the groups are all selected by default
+        this.selectedOptions.forEach(group => {
+          this.groupSelected(group);
+          //group.selected = true;
+          //this.productsService.selectedGroups.set(group.id, group.selected);
+          // The UI does not reflect the changes in the selected property of the group
+        });
       }
-    )
+    );
   }
 
   groupSelected(group: CategoryGroup) {
+    if (group.selected == undefined) {
+      group.selected = false;
+    }
     group.selected = !group.selected;
     this.productsService.selectedGroups.set(group.id, group.selected);
+    this.productsService.updateCategoryTreeOnGroupChange();
   }
 
 

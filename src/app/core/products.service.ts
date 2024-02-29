@@ -5,6 +5,7 @@ import { ProductData } from './product.interface';
 import { Observable } from 'rxjs';
 import { TreeNode } from './tree-node.interface';
 import { CategoryGroup } from './category-group';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class ProductsService {
   //   // return p;
   // }
 
-
+  treeDataSource = new MatTreeNestedDataSource<TreeNode>();
   selectedNodes : Map<number, boolean>  = new Map<number, boolean>();
   selectedGroups : Map<number,boolean> = new Map  <number,boolean>();
 
@@ -48,9 +49,26 @@ export class ProductsService {
     return this.http.get<TreeNode[]>(this.buildCategoryTreeApiUrl(groupsFilter));
   }
 
+  /// This method will be called when the user selects a category group in the category groups component.
+  updateCategoryTreeOnGroupChange() {
+    //We build an array of group ids that are selected
+    let selectedGroupIds: number[] = [];
+    this.selectedGroups.forEach((value: boolean, key: number) => {
+      if (value) {
+        selectedGroupIds.push(key);
+      }
+    });
+    //We call the getCategoryTree method with the new group ids filter
+    this.getCategoryTree(selectedGroupIds).subscribe(data => {  this.treeDataSource.data = data; })
+    
+    console.log('Selected groups: ' + selectedGroupIds);  
+
+  }
+
   getCategoryGroupsView():Observable<CategoryGroup[]>{
     return this.http.get<CategoryGroup[]>(this.buildCatgoryGroupsViewApiUrl());
   } 
+
 
   private buildCategoryTreeApiUrl(groupsFilter: string):string {
     return `${this.config.apiEndpoint}/categories/tree?groups=${groupsFilter}`;
@@ -59,4 +77,6 @@ export class ProductsService {
   private buildCatgoryGroupsViewApiUrl():string {
     return `${this.config.apiEndpoint}/categories/groups/view`;
   }
+
+
 }

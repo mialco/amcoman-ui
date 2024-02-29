@@ -14,18 +14,23 @@ import { TreeNode } from '../tree-node.interface';
 
 export class SideMenuTreeComponent implements OnInit{
   treeControl = new NestedTreeControl<TreeNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<TreeNode>();
+  //dataSource = new MatTreeNestedDataSource<TreeNode>();
+  //dataSource = this.productService.treeDataSource;
 
-  constructor(private productService: ProductsService) {
+  constructor(public productService: ProductsService) {
 
   }
 
   //private selectedNodes : Map<number, boolean>  = new Map<number, boolean>();
 
   ngOnInit(): void {
-  //this.dataSource.data = TREE_DATA;
-  this.productService.getCategoryTree([1,2,3,4,5]).subscribe(data => {  this.dataSource.data = data; })
+    
+    console
+    this.productService.getCategoryTree([]).subscribe(data => {  this.productService.treeDataSource.data = data; })
+    
 
+    
+    console.log('SideMenuTreeComponent ngOnInit');
   }
 
   hasChild = (_: number, node: TreeNode) => !!node.children && node.children.length > 0;
