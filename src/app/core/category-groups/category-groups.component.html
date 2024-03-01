@@ -6,14 +6,18 @@
                 <span>Category Groups</span>
             </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-selection-list >
-            @for (option of selectedOptions; track option.id){
-                <mat-list-option [value]="option.id" (selectedChange)="groupSelected(option)">
+        <mat-selection-list  [(ngModel)]="allSelectedOptions" >
+  
+            <!-- @for (option of selectedOptions; track option.id){
+                <mat-list-option  [value]="option.id" (selectedChange)="groupSelected(option,false)" >
                     {{option.groupName}}
                 </mat-list-option>
             }
-        </mat-selection-list>
-
-
+  -->
+            <mat-list-option *ngFor="let option of selectedOptions"  [value]="option.id" (selectedChange)="groupSelected(option,false)" >
+                    {{option.groupName}}
+                </mat-list-option>            
+ 
+            </mat-selection-list>
     </mat-expansion-panel>
 </mat-accordion>
