@@ -12,7 +12,7 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 })
 export class ProductsService {
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig, public http: HttpClient) { }
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig, public http: HttpClient ) { }
   private baseUrl = `${this.config.apiEndpoint}/products`;
   
   // getMockProduct():ProductData
@@ -54,14 +54,19 @@ export class ProductsService {
     //We build an array of group ids that are selected
     let selectedGroupIds: number[] = [];
     this.selectedGroups.forEach((value: boolean, key: number) => {
+      console.log('Key: ' + key + ' Value: ' + value);
       if (value) {
+        
         selectedGroupIds.push(key);
       }
     });
+    console.log('Selected groups for filtering categories: ' + JSON.stringify(selectedGroupIds));
     //We call the getCategoryTree method with the new group ids filter
-    this.getCategoryTree(selectedGroupIds).subscribe(data => {  this.treeDataSource.data = data; })
+    this.getCategoryTree(selectedGroupIds).subscribe(data => {  this.treeDataSource.data = data; 
     
-    console.log('Selected groups: ' + selectedGroupIds);  
+  })
+    
+    console.log('Get category Trees with  Selected groups: ' +JSON.stringify( selectedGroupIds));  
 
   }
 
@@ -71,7 +76,7 @@ export class ProductsService {
 
 
   private buildCategoryTreeApiUrl(groupsFilter: string):string {
-    return `${this.config.apiEndpoint}/categories/tree?groups=${groupsFilter}`;
+    return `${this.config.apiEndpoint}/categories/tree?groupidsfilter=${groupsFilter}`;
   }
 
   private buildCatgoryGroupsViewApiUrl():string {

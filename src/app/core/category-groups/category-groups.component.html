@@ -6,7 +6,7 @@
                 <span>Category Groups</span>
             </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-selection-list  [(ngModel)]="allSelectedOptions" >
+        <mat-selection-list  [(ngModel)]="allSelectedOptions"  (selectionChange)="onSelectionChange($event)">
   
             <!-- @for (option of selectedOptions; track option.id){
                 <mat-list-option  [value]="option.id" (selectedChange)="groupSelected(option,false)" >
@@ -14,7 +14,7 @@
                 </mat-list-option>
             }
   -->
-            <mat-list-option *ngFor="let option of selectedOptions"  [value]="option.id" (selectedChange)="groupSelected(option,false)" >
+            <mat-list-option *ngFor="let option of selectedOptions"  [value]="option.id"  >
                     {{option.groupName}}
                 </mat-list-option>            
  

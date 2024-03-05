@@ -33,6 +33,7 @@ export class NavigationComponent implements OnInit{
   collapsed : boolean = true;
   isLoggedIn$ !: Observable<boolean> ;
   isLoggedOut$ !: Observable<boolean> ;
+  userName :  string = '';
   
   constructor(private modelService : NgbModal, public identityService : IdentityService) { 
       console.log('Navigation component is created. Thus us using AuthData:  as well');
@@ -42,6 +43,8 @@ export class NavigationComponent implements OnInit{
   //login
   open(){
     const modalRef = this.modelService.open(LoginComponent,{windowClass : 'login-modal'});
+    this.userName = this.identityService.getUserName();
+    console.log('User name in navigation component: ' + this.userName);
   }
 
   logout(){

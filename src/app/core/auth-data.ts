@@ -5,66 +5,66 @@ export class AuthData {
     
     private readonly roleClaimName:string = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
 
-    username: string | undefined = "";
-    email: string | undefined = "";
+    username: string  = '';
+    email: string  = '';
     isAdminLoggedIn: boolean = false;
     isLoggedIn: boolean = false;
     roles: string[] = [];
     token: AuthToken | undefined;
+      expiresAt: Date = Date.now.toString() as unknown as Date;
+    refreshToken: string = '';
+    static jwtToken: string = ''  ;
+
 
     constructor(token? : AuthToken) {
       console.log('AuthData is created');
        if (token === undefined || token.token === undefined ) {
         console.log('Empty Token is loaded in the constructor of authData: Will try to get it from storage' + JSON.stringify(token));
-        var localTokenString=localStorage.getItem("token");
-        var localToken !: AuthToken ;
-        if (localTokenString) {
-          localToken = JSON.parse(localTokenString);
-        }
-        if ( localToken === undefined || localToken.token === undefined || localToken.token === null){
-          console.log('Token is not in the storage: ');
-          this.isLoggedIn=false;
-          this.username = undefined;
-          this.roles = [];
-          this.email = undefined;
-          this.isAdminLoggedIn=false;
-          this.token = undefined;
-          return;
+        //var localTokenString=localStorage.getItem("token");
+        //var localToken !: AuthToken ;
+        //if (localTokenString) {
+        //  localToken = JSON.parse(localTokenString);
+        //}
+        // if ( localToken === undefined || localToken.token === undefined || localToken.token === null){
+        //   console.log('Token is not in the storage: ');
+        //   this.isLoggedIn=false;
+        //   this.username = undefined;
+        //   this.roles = [];
+        //   this.email = undefined;
+        //   this.isAdminLoggedIn=false;
+        //   this.token = undefined;
+           return;
         }
         else
         {
-        this.isLoggedIn=true;
-        this.username = localStorage.getItem("username") ?? "";
-        this.roles = JSON.parse(localStorage.getItem("roles") ?? "[]");
-        this.token = localToken;
+        this.token = token;
        }
-      }
-      else{
+      //}else{
         console.log('Non undefide Token is loaded in the constructor of authData: ' + JSON.stringify(token));
         if(token === undefined || token.token === null || token === undefined || token === null){
           //Attempt to get it from local storage
           console.log('Token is undefined in the constructor we will try to get it from local storage');
-          localTokenString=localStorage.getItem("token");
-          if (localTokenString) {
-            localToken = JSON.parse(localTokenString);
-          }
-          if (localToken) {
-            console.log('Token is loaded from local storage but I believe is empty: ' + localToken);
-            token.token = localToken.token;
-            this.username = localStorage.getItem("username") ?? "";
-            this.roles = JSON.parse(localStorage.getItem("roles") ?? "[]");
-            this.token = localToken;            
-          }
-          else{
-            console.log('Token is loaded from local storage is emty so we are loging out');
-            this.isLoggedIn=false;
-            this.username = undefined;
-            this.roles = [];
-            this.email = undefined;
-            this.isAdminLoggedIn=false;
-            this.token = undefined;
-            return;
-          }
+          //localTokenString=localStorage.getItem("token");
+          // if (localTokenString) {
+          //   localToken = JSON.parse(localTokenString);
+          // }
+          // if (localToken) {
+          //   console.log('Token is loaded from local storage but I believe is empty: ' + localToken);
+          //   token.token = localToken.token;
+          //   this.username = localStorage.getItem("username") ?? "";
+          //   this.roles = JSON.parse(localStorage.getItem("roles") ?? "[]");
+          //   this.token = localToken;            
+          // }
+          // else{
+          //   console.log('Token is loaded from local storage is emty so we are loging out');
+          //   this.isLoggedIn=false;
+          //   this.username = undefined;
+          //   this.roles = [];
+          //   this.email = undefined;
+          //   this.isAdminLoggedIn=false;
+          //   this.token = undefined;
+          //   return;
+          // }
           // Do something if the token is an instance of AuthData and has an access_token property
         }
         else{ //Token is not undefined so it was passed in
@@ -73,7 +73,7 @@ export class AuthData {
         } 
       }
      
-    }
+    
   
     //#region  Token Utilities
     // saveToken(token: { access_token: any; }) {
@@ -95,7 +95,7 @@ export class AuthData {
       console.log('Storing Token: ' + JSON.stringify(token));
       console.log('Storing Token Acceess_tOKEN: ' + JSON.stringify(token));
       if (token) {
-      this.token
+      this.token = token;
       var userClaims : any= this.decodeToken(token.token);
       console.log('Storing TokenVm in local storage: ' + JSON.stringify(userClaims));
       if (userClaims)
@@ -103,21 +103,16 @@ export class AuthData {
         this.username = userClaims.sub;
         this.email = userClaims.email;
         this.isAdminLoggedIn= userClaims.role === 'Admin';
-        localStorage.setItem("username", this.username ?? "");
-        localStorage.setItem("email", this.email ?? "");
-        localStorage.setItem("roles", JSON.stringify(this.roles));  
-        console.log('user in local storage: ' + userClaims.sub);
-        console.log('email in local storage: ' + userClaims.email);
-        console.log('role in local storage: ' + userClaims.role);
+        this.isLoggedIn = true;
+        this.roles = userClaims[this.roleClaimName];        
       }
-
     }
       // if(token && token.access_token){
       //   console.log('Storing Token in local storage: ' + JSON.stringify(token));
 
-       localStorage.setItem("token", JSON.stringify(token));
-       localStorage.setItem("roles", JSON.stringify(this.roles));
-       localStorage.setItem("username", this.username ?? "");
+      //  localStorage.setItem("token", JSON.stringify(token));
+      //  localStorage.setItem("roles", JSON.stringify(this.roles));
+      //  localStorage.setItem("username", this.username ?? "");
 
       // }
       
@@ -126,20 +121,10 @@ export class AuthData {
 
     public static getToken():  string | undefined  {
   
+      this
       let accessToken: string;
-      if (localStorage.getItem("token")) {
-        var result = localStorage.getItem("token") ?? undefined 
-        if (result !== undefined)
-        {
-          //return JSON.parse(result).access_token;
-          return JSON.parse(result).token;
-        }else{ 
-          return undefined;
-        }
-        
-      } else {
-        return undefined;
-      }
+      return this.jwtToken ;
+
   
     }
   
@@ -180,15 +165,16 @@ export class AuthData {
       }
     }
   
-    clearToken(){
-      localStorage.removeItem("token");
-      localStorage.removeItem("username");
-      localStorage.removeItem("roles");
-      localStorage.removeItem("email");
-      this.username = "";
-      this.email = "";
+    clear(){
+      this.username = '';
+      this.email = '';
       this.roles = [];
-
+      this.token = undefined;
+      this.isLoggedIn = false;
+      this.isAdminLoggedIn = false;
+      this.expiresAt = Date.now.toString() as unknown as Date;
+      this.refreshToken = '';
+      AuthData.jwtToken = '';
     }
     //#endregion
   

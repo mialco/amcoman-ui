@@ -1,9 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
 
-    <brand-logo></brand-logo>
+  <brand-logo></brand-logo>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-    aria-expanded="false" aria-label="Toggle navigation" (click)="collapsed=!collapsed">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+    (click)="collapsed=!collapsed">
     <span class="navbar-toggler-icon">ccxbxcv</span>
   </button>
 
@@ -28,40 +29,35 @@
       </li> -->
       <li class="nav-item">
         <div>
-        <a routerLink="/about-us" class="nav-link"  routerLinkActive="active" ariaCurrentWhenActive="page">About</a>
+          <a routerLink="/about-us" class="nav-link" routerLinkActive="active" ariaCurrentWhenActive="page">About</a>
           <!-- <a routerLink="/user/bob" routerLinkActive="active-link">Bob</a> -->
         </div>
-        </li>  
+      </li>
       <li class="nav-item">
         <a routerLink="/contact-us" class="nav-link" routerLinkActive="active">Contact Us</a>
       </li>
       <li class="nav-item">
         <a routerLink="/affiliate-disclosure" class="nav-link" routerLinkActive="active">Affiliate Disclosure</a>
-          
-      </li> 
-        <li class="nav-item">
-          <a href=""  routerLink="/affiliate-disclosure" class="nav-link" routerLinkActive="active">Affiliate Disclosure</a>
-        </li> 
+
+      </li>
+      <li class="nav-item">
+        <a href="" routerLink="/affiliate-disclosure" class="nav-link" routerLinkActive="active">Affiliate
+          Disclosure</a>
+      </li>
 
     </ul>
 
-    <ul class="navbar-nav">
-      <li *ngIf="isLoggedOut$ |async" class="nav-item">
+    <ul class="navbar-nav ml-auto"> <!-- Add ml-auto class here -->
+      <li *ngIf="identityService.isLoggedOut$|async" class="nav-item">
         <a class="nav-link" href="#" (click)="open()">Login</a>
       </li>
       <li *ngIf="isLoggedIn$ | async" class="nav-item">
         <a class="nav-link" routerLinkActive="active">{{authData.username}} </a>
       </li>
-      <li *ngIf="isLoggedIn$ | async" class="nav-item">
+      <li *ngIf="identityService.isLoggedIn$| async" class="nav-item">
         <a class="nav-link" href="#" routerLinkActive="active" (click)="logout()">Logout </a>
       </li>
-      <li>Is LoggedId: {{isLoggedIn$ | async}}</li>
-      <li>IsLoggedOut {{isLoggedOut$ | async}}</li>
-      <li *ngIf="authData.username ">Account: :{{authData.username}}</li>
+      <li class="nav-link" *ngIf="authData.username">Account: {{authData.username}}</li>
     </ul>
-    <!-- <form class="form-inline my-2 my-lg-0">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form> -->
   </div>
 </nav>

@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   private readonly FormDescriptionForgotPassword: string="Enter your email to reset your password.";
   
   errors: string[] = [];
-  registrationSuccessMessage: string="";
+  authSuccessMessage: string="";
   username: string="";
   password: string="";
   confirmPassword: string="";
@@ -42,7 +42,10 @@ export class LoginComponent implements OnInit {
   showEmaiGroup: boolean=false;
   formTitle : string=this.FormTitleLogin;
   formDescription : string=this.FormDescriptionLogin;
-
+  // Buttons properties
+  showCloseButton: boolean = false;
+  showSubmitButton: boolean = true;
+  submitButtonText: string = "Submit";
 
   constructor( @Inject(APP_CONFIG) private config: IAppConfig, 
         public identityService: IdentityService, 
@@ -83,7 +86,7 @@ export class LoginComponent implements OnInit {
   }
 
   registerUser() {
-    console.log("is new registration called" );
+    console.log("is new registration called" );    
     var  userRegistrationVm = {
       userName: this.username,
       email: this.email,
@@ -104,14 +107,11 @@ export class LoginComponent implements OnInit {
     this.identityService.register(userRegistrationVm).pipe(
       tap(data => {
         
-        //I want to message the user that the registration was successful or not  
-        
-        //this.activeModal.close();
       })
     ).subscribe({
       next: () => {        
         console.log("register user success");
-        this.registrationSuccessMessage="Registration successful. Please login.";
+        this.authSuccessMessage="Registration successful. Please login.";
       },
       error: (response) => {
         console.log("register user failed")
@@ -127,25 +127,35 @@ export class LoginComponent implements OnInit {
   loginUser() {
     var loginData  = new userLoginVm() ;
     loginData.userName=this.username;
-    loginData.password=this.password;
+      loginData.password=this.password;
     console.log("is login called");
     console.log(loginData);
 
-    this.identityService.login(loginData)
-    // .  .(
-    //   tap(data => {
-    //     this.activeModal.close();
-    //   }),
-    //   catchError(error => {
-    //     this.messageService.push(MessageType.DANGER, "error in promise");
-    //     return EMPTY;
-    //   })
-    // );
-    // this.identityService.login((loginData)=>{
-    //   this.activeModal.close();
-    // },(error)=>{
-    //   this.messageService.push(MessageType.DANGER,"error in promise");
-    // })
+    try{
+    let response =  this.identityService.login(loginData);
+    response.then (data=> {
+      if (data ==='') {
+        console.log("login success");
+        this.authSuccessMessage="Succesfully logged in.";
+        this.showCloseButton=true;
+        this.showSubmitButton=false;
+      }else{
+        this.errors.push("Invalid username or password");
+      }
+    });
+    
+    // if (response ==='') {
+    //     this.authSuccessMessage="Succesfully logged in.";
+    //     this.showCloseButton=true;
+    //     this.showSubmitButton=false;
+    //   }else{
+    //     this.errors.push("Invalid username or password");
+    //     this.errors.push(response);
+    //   }
+    }catch(error){
+      console.log("login error: " + error);
+      this.errors.push("Invalid username or password");
+    }
   }
 
 
@@ -160,6 +170,9 @@ export class LoginComponent implements OnInit {
     this.showLoginCmd=true;
     this.formTitle=this.FormTitleRegister;
     this.formDescription=this.FormDescriptionRegister;
+    this.submitButtonText="Register";
+    this.showCloseButton=false;
+    this.showSubmitButton=true;
   }
 
   showForgotPassword_Clicked() {
@@ -173,7 +186,9 @@ export class LoginComponent implements OnInit {
     this.showLoginCmd=true;
     this.formTitle=this.FormTitleForgotPassword;
     this.formDescription=this.FormDescriptionForgotPassword;
-
+    this.submitButtonText="Submit";
+    this.showCloseButton=false;
+    this.showSubmitButton=true;
   }
 
   showLogin_Clicked() {
@@ -187,6 +202,9 @@ export class LoginComponent implements OnInit {
     this.showLoginCmd=false;
     this.formTitle=this.FormTitleLogin;
     this.formDescription=this.FormDescriptionLogin;
+    this.submitButtonText="Login";
+    this.showSubmitButton=true;
+    this.showCloseButton=false;
   }
 
   showPassword() : boolean {

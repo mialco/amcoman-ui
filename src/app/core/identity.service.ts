@@ -14,68 +14,114 @@ import { UserTokenVm } from './model/userTokenVm';
 import { AuthToken } from './auth-token';
 import { HttpHeaders } from '@angular/common/http';
 
-export const ANONYMOUS_USER : AuthData = new AuthData(
-  {
-    token: undefined,
-    refreshToken: undefined,
-    expiresAt: undefined
-  }
-);
+export const ANONYMOUS_USER : AuthData = new AuthData();
+
 
 @Injectable({providedIn: 'root'})
 export class IdentityService {
 
-  private authDataSubject = new BehaviorSubject<AuthData>(ANONYMOUS_USER);
+  private authData = new AuthData();
+  private authDataSubject = new BehaviorSubject<AuthData>(this.authData);
   user$ : Observable<AuthData> = this.authDataSubject.asObservable();
-  isLoggedIn$: Observable<boolean> = this.user$.pipe(map(authData =>authData.username != undefined));
-  isLoggedOut$: Observable<boolean> = this.user$.pipe(map(authData => authData.username == undefined));
+  isLoggedIn$: Observable<boolean> = this.user$.pipe(map(authData => authData.username !== ''));
+  isLoggedOut$: Observable<boolean> = this.user$.pipe(map(authData => authData.username === '' ));
   
   
   constructor( @Inject(APP_CONFIG) private config: IAppConfig, public http: HttpClient, 
               private messageService: MessageService) {
       console.log('Identity Service is created');
+      this.loginFromStorage();
       this.user$.pipe(tap(authData=>{console.log('User initial data in identity Service: ' + JSON.stringify(authData));}));
     
   }
+
   
+  //when we load the service we check if the user is already logged in
+  loginFromStorage() {
+    var jwtToken = localStorage.getItem('jwttoken');
+    if (jwtToken) {
+      this.authData.username = localStorage.getItem('user')!;
+      this.authData.roles = JSON.parse(localStorage.getItem('roles')!);
+      this.authData.email = localStorage.getItem('email')!;
+      this.authData.refreshToken = localStorage.getItem('refreshToken')!;
+      this.authData.expiresAt = JSON.parse(localStorage.getItem('expiresAt')!);
+      this.isLoggedIn$ = of(true);
+      this.isLoggedOut$ = of(false);
+      
+    }
+    else {
+      this.isLoggedIn$ = of(false);
+      this.isLoggedOut$ = of(true);
+    }
+  }  
   
-  
-  //#region API to get Tokens
-  login(loginData:userLoginVm) {     //: Observable<AuthData| undefined> {
-      //As CORS is not enabled on identity Server this api will respond 400
-    // And on API server the Account/Login api returns 500
-    //var authData = new AuthData({token: undefined,refreshToken: undefined,expiresAt: undefined });
+  async login(loginData:userLoginVm): Promise<string>  {     //: Observable<AuthData| undefined> {
     var authData! : AuthData 
     var url = this.buildLoginApiUrl()
     console.log('Login data sent to api: ' + url  +  ' ' +   JSON.stringify(loginData));
-    //How do I add headers to this post request
-    
-    // ...
 
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    //this.http.get(url, { headers }).subscribe(data => {console.log('Data: ' + JSON.stringify(data));});
-    //this.http.post<AuthToken>(url,loginData, { headers }).pipe(
-    return this.http.post(url,loginData).
-      subscribe(data => {
-          console.log('Data: ' + JSON.stringify(data));
-      }        
-        );
-    // this.http.post(url,loginData).pipe(
-    //     tap(token => {
-    //     //this.user$  .subscribe(data => {Userdata.username = loginData.userName;});
-    //     authData = new AuthData(token as AuthToken);
-    //     return of(authData);        
-    //     //this.authDataSubject.next(new AuthData(token));
-    //     // console.log('Token: ' + token);
-    //     this.user$.pipe(map(data => {data.username = loginData.userName;}));
-          
-    //   }));
-    //   return of (undefined)
-      
-      //map<UserTokenVm>(token => {console.log('Token: ' + JSON.stringify(token)); return new AuthData(token);}),;
+    await of (this.http.post<AuthToken>(url,loginData).
+        subscribe(token => {
+            console.log('Data received from loginapi: ' + JSON.stringify(token));
+            //We extract the user name from the token and set it in the authData
+            this.authData.token = token;
+            this.authData.username='';
+            this.authData.saveToken(token);
+            console.log('User name after saving token: ' + this.authData.username);
+            localStorage.setItem('user',this.authData.username);
+            localStorage.setItem('roles',JSON.stringify( this.authData.roles));
+            localStorage.setItem('email',this.authData.email);
+            if (token.token) {
+              localStorage.setItem('jwttoken', token.token);
+              AuthData.jwtToken = token.token;
+            }
+            if (token.refreshToken) {
+              localStorage.setItem('refreshToken', token.refreshToken);
+              this.authData.refreshToken = token.refreshToken; 
+            }
+            if (token.expiresAt) {
+              localStorage.setItem('expiresAt', JSON.stringify(token.expiresAt));
+              this.authData.expiresAt = token.expiresAt;
+            } 
+            this.isLoggedOut$ = of(false);
+            this.isLoggedIn$ = of(true);
+            //this.authDataSubject.next(authData);
+            console.log('AuthData after login: ' + JSON.stringify(this.authData.username));
+            return '';  
+        }
+      // ,error => {
+      //   let errorMessage = '';        
+      //   console.log('Error in login after subscribe: ' + JSON.stringify(error));
+      //   if(error.headers){
+      //     error.headers.forEach((item: string) => {
+      //       console.log(item + ' : ' + item + ' : ' );
+      //     });
+      //     if(error.headers.status){
+      //       errorMessage = error.headers.status! + ' - ';
+      //     }
+      //     if (error.headers.title){
+      //       errorMessage += error.headers.title!;
+      //     }
+      //   }
+      //   if (errorMessage === '') {
+      //     errorMessage = 'Unauthorized';
+      //   }
+      //   return of(errorMessage); 
+      // }          
+      )
+      ,
+      catchError (error => {
+        console.log('Error in login: ' + JSON.stringify(error));
+        this.messageService.parseErrorAndPush(error, new ErrorMessages("error: " + JSON.stringify(error)));        
+        return 'Unauthorized'; 
+      })) ;
+      return '';
   }
 
-
+getUserName(): string {
+  return this.authData.username;
+} 
 // Chat GPT version:
 
 getApplicationToken(succesCallback: { (data: any): void; (arg0: AuthData): void; }, errorCallback: { (error: any): void; (arg0: any): void; }): Observable<any> {
@@ -96,14 +142,13 @@ getApplicationToken(succesCallback: { (data: any): void; (arg0: AuthData): void;
 
 
   logOut(): void {
-
-    this.user$.pipe(tap(authData=>{
-          console.log('Logging out');
-          authData.clearToken();
-          authData.username = undefined; 
-        }));
-    this.authDataSubject.next(ANONYMOUS_USER);
+    console.log('Log out is called');
+    this.clearToken();
+    this.authData.clear();
+    this.isLoggedIn$ = of(false);
+    this.isLoggedOut$ = of(true);
   }
+
   //#endregion
 
 
@@ -149,6 +194,16 @@ getApplicationToken(succesCallback: { (data: any): void; (arg0: AuthData): void;
     return this.config.identityEndPoint + '/authentication/forgot-password';
   } 
   //#endregion
+
+  private clearToken(){
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("roles");
+    localStorage.removeItem("email");
+    localStorage.removeItem('jwttoken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('expiresAt');
+  }
 
     /*/
   getApplicationToken(succesCallback: { (data: any): void; (arg0: AuthData): void; }, errorCallback: { (error: any): void; (arg0: any): void; }): any {

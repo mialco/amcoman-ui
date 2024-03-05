@@ -8,8 +8,8 @@
       </div>
     </div>
   </div>
-  <div *ngIf="registrationSuccessMessage">
-    <div class="alert alert-info">{{registrationSuccessMessage}}</div>
+  <div *ngIf="authSuccessMessage">
+    <div class="alert alert-info">{{authSuccessMessage}}</div>
   </div>
   <h3 class="text-center">
     {{formTitle}}
@@ -55,7 +55,8 @@
     </div> -->
 
     <div class="container p-1">
-      <button type="button" (click)="submitForm(username, password)" class="p-1 btn btn-primary">Submit</button>
+      <button *ngIf="showCloseButton" type="button" (click)="closeModal()" class="p-1 btn btn-primary">Close</button>
+      <button *ngIf="showSubmitButton" type="button" (click)="submitForm(username, password)" class="p-1 btn btn-primary">{{submitButtonText}}</button>
       <div class="p-1"></div>
       <button type="button" (click)="closeModal()" class="btn btn-secondary">Cancel</button>
       <div class="right-align">

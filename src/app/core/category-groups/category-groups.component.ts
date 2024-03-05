@@ -11,59 +11,41 @@ export class CategoryGroupsComponent
 
   constructor( private productsService :ProductsService) { }
   selectedOptions: CategoryGroup[] = new Array<CategoryGroup>();
-
   ngOnInit() {
     console.log('CategoryGroupsComponent ngOnInit');
+    this.initializeGroups();
+  }
+  isInitialized = false;
+  allSelectedOptions : number[] = [];//  = this.selectedOptions.map(group => group.id);
+
+  initializeGroups(): void {
+    console.log('initializeGroups');
     this.productsService.getCategoryGroupsView().subscribe(
       (data: CategoryGroup[]) => {
-        // data.forEach(element => {
-        //     element.selected = true;
-        //     this.productsService.selectedGroups.set(element.id, element.selected);
-        // });
         this.selectedOptions = data;
-
-        //And I want to esure that the groups are all selected by default
-        this.selectedOptions.forEach(group => {
-          this.groupSelected(group, true);
-          //group.selected = true;
-          //this.productsService.selectedGroups.set(group.id, group.selected);
-          // The UI does not reflect the changes in the selected property of the group
+        this.allSelectedOptions = this.selectedOptions.map(group => group.id);
+        data.forEach(group => {
+          group.selected = true;
+          this.productsService.selectedGroups.set(group.id, true);
         });
-      }
-    );
+        console.log('initializeGroups - SelectedOptions: ' + JSON.stringify( this.selectedOptions));
+        this.productsService.updateCategoryTreeOnGroupChange();        
+        this.isInitialized = true;
+      },
+    ),
+      (error: any) => console.log(error);
+
   }
 
-  allSelectedOptions : number[] = [];//  = this.selectedOptions.map(group => group.id);
-  // trackByFn(item: CategoryGroup): number {
-  //   return item.id;
-  // }
-  // compareFn(groupA: CategoryGroup, groupB: CategoryGroup): boolean {
-  //   return groupA.id === groupB.id;
-  // }
-
-  groupSelected(group: CategoryGroup, initialize:boolean) {
-    console.log('groupSelected  - Initialize: ' + initialize);
-    if (group.selected == undefined) {
-      group.selected = false;
+onSelectionChange(event: any) { 
+  this.productsService.selectedGroups.forEach((value: boolean, key: number) => {
+    if(this.allSelectedOptions.find(g => g == key) === undefined){
+      this.productsService.selectedGroups.set(key, false);
+    }else{
+      this.productsService.selectedGroups.set(key, true);
     }
-
-    if (initialize) {
-      this.allSelectedOptions = this.selectedOptions.map(group => group.id);
-      group.selected = true;
-      this.productsService.selectedGroups.set(group.id, group.selected);
-      const foundGroup = this.selectedOptions.find(g => g.id == group.id);
-      if (foundGroup) {
-        foundGroup.selected = group.selected;
-      }
-      return;
-    } else {
-      //group.selected = !group.selected;
-    }
-    console.log('groupSelected  - group.selected: ' + group);
-    let selectedGroupId = this.allSelectedOptions.find(g => g == group.id) ;
-    this.productsService.selectedGroups.set(group.id, selectedGroupId === undefined );
-    this.productsService.updateCategoryTreeOnGroupChange();
-  }
-
+  });
+  this.productsService.updateCategoryTreeOnGroupChange();
+}
 
 }
