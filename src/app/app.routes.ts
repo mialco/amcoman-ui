@@ -7,9 +7,10 @@ import { ProductDetailsComponent } from './core/product-details/product-details.
  export const routes: Routes = [
    { path: 'contact-us', component: ContactusComponent },
    { path: 'about-us', component: ContactusComponent },
-   { path:'products/list',component: ProductListComponent},
+   //{ path:'products/list',component: ProductListComponent},
    { path:'products/list/search',component: ProductListComponent},
    { path:'products/list/category/:id',component: ProductListComponent},
+   { path:'products/list',component: ProductListComponent},
    { path:'product/:id',component: ProductDetailsComponent},
 
    { path: '**', component: HomeComponent },
