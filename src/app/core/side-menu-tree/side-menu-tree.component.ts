@@ -3,6 +3,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { ProductsService } from '../products.service';
 import { TreeNode } from '../tree-node.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'side-menu-tree',
@@ -17,7 +18,8 @@ export class SideMenuTreeComponent implements OnInit{
   //dataSource = new MatTreeNestedDataSource<TreeNode>();
   //dataSource = this.productService.treeDataSource;
 
-  constructor(public productService: ProductsService) {
+  constructor(public productService: ProductsService, 
+    private router: Router) {
 
   }
 
@@ -53,7 +55,20 @@ export class SideMenuTreeComponent implements OnInit{
       selected = node.selected;
     }
     this.productService.selectedNodes.set(nodeId, selected);
-    console.log("Tree clicked: " + node.name + " " + this.productService.selectedNodes.get(nodeId));  
+    console.log("Tree clicked: " + node.name + " " + node.id + " " + this.productService.selectedNodes.get(nodeId));  
+    let selectedNodesIds:number[] = []
+    this.productService.selectedNodes.forEach((value,key)  => {
+      console.log('Node id: ' + key + ' Selected: ' + value);
+      if (value)
+      {
+        selectedNodesIds.push(key);
+      }          
+    });
+    console.log('Selected nodes: ' + JSON.stringify(selectedNodesIds));
+    //I want to navigate to the products page with the selected nodes but not loading the page again
+    //I want to pass the selected nodes to the products page
+
+    this.router.navigate(['products/list'],  { queryParams: { categories :  selectedNodesIds.join(',') , pageindex:this.productService.getPageNextCounter() , pagesize: this.productService.getPageSize()} } );
   }
  
 }

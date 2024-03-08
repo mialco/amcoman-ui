@@ -5,6 +5,8 @@ import { ProductData } from '../product.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductsService } from '../products.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { routes } from '../../app.routes';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -15,7 +17,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class ProductListComponent implements OnInit {
 
 
-  constructor (@Inject (ProductsService) private ps:ProductsService
+  constructor (@Inject (ProductsService) private productsService:ProductsService
+  , private route: ActivatedRoute
   ,private sanitizer: DomSanitizer
   ){
 
@@ -29,17 +32,32 @@ export class ProductListComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   
   ngOnInit(){
-  
-  this.productList = new MatTableDataSource<ProductData>(undefined);
+
+    this.route.queryParams.subscribe(params => {
+      this.updateProductList(params, this.productsService.getPageNextCounter(), this.productsService.getPageSize());    
+
+
+    });
+
+    this.productList = new MatTableDataSource<ProductData>(undefined);
   
   //var products = 
-  this.ps.getProducts(1,2).subscribe(result=>this.productList.data = result);
+
+  //this.productsService.getProducts(1,2).subscribe(result=>this.productList.data = result);
   
 
   this.productList.paginator = this.paginator;
   this.productList.sort=this.sort;
 
 
+}
+
+updateProductList(params: Params,  pageCounter:number, pageSize:number){
+  
+  console.log('updateProductList' +   JSON.stringify(params));
+  this.productsService.getProducts(pageCounter, pageSize, {params}).subscribe(result=>this.productList.data = result);
+
+  
 }
 
 sanitizeDescription(description: string): SafeHtml {

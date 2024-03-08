@@ -6,7 +6,7 @@ import { MessageService, MessageType } from '../message.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { catchError, tap } from 'rxjs/operators';
 import { userLoginVm } from '../model/userLoginVm';
-import { EMPTY } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'login',
@@ -26,6 +26,8 @@ export class LoginComponent implements OnInit {
   
   errors: string[] = [];
   authSuccessMessage: string="";
+  errorMsg$: Observable<string>;
+  authSuccessMessage$: Observable<string>;
   username: string="";
   password: string="";
   confirmPassword: string="";
@@ -46,16 +48,34 @@ export class LoginComponent implements OnInit {
   showCloseButton: boolean = false;
   showSubmitButton: boolean = true;
   submitButtonText: string = "Submit";
+  waitForLogin$: Observable<string> = EMPTY;
 
   constructor( @Inject(APP_CONFIG) private config: IAppConfig, 
         public identityService: IdentityService, 
         private messageService: MessageService, 
-        private activeModal : NgbActiveModal) { }
+        private activeModal : NgbActiveModal) { 
+        this.waitForLogin$ = new Observable<string>(observer=>{observer.next('');});
+        this.errorMsg$ = new Observable<string>();
+        this.authSuccessMessage$ = new Observable<string>();
+        }
 
   configString: string | undefined;
 
   ngOnInit() {
     this.configString = JSON.stringify(this.config);
+    this.waitForLogin$.subscribe();
+    this.errorMsg$.subscribe(data=>{this.errors.push(data);});
+    this.identityService.loginProcessStatus.subscribe(data=>{
+    if(data=='Success'){
+      this.errors=[];
+      this.authSuccessMessage= 'Successfully logged in';
+      this.showCloseButton=true;
+      this.showSubmitButton=false;
+    }
+    else if(data=='Unauthorized'){
+      this.errors.push('Invalid username or password');
+    }
+    });
   }
 
   submitForm(userName: string, password: string) {
@@ -71,7 +91,7 @@ export class LoginComponent implements OnInit {
     }
  
     if (this.isLogin) {
-      this.loginUser(); 
+      this.loginUser$(); 
   }
 
     if (this.isForgotPassword) {
@@ -113,8 +133,8 @@ export class LoginComponent implements OnInit {
         console.log("register user success");
         this.authSuccessMessage="Registration successful. Please login.";
       },
-      error: (response) => {
-        console.log("register user failed")
+      error: (response)=> {
+        console.log("register user failed");
         console.log(response.status);
         console.log(response.error);
         console.log(response.message);
@@ -124,38 +144,91 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  loginUser() {
+  loginUser$()  {
     var loginData  = new userLoginVm() ;
     loginData.userName=this.username;
       loginData.password=this.password;
     console.log("is login called");
     console.log(loginData);
+    // const response$ = new Observable((observer) =>{
+    //   let stringResponse: string;
+    //   this.identityService.login(loginData)(
+    //     (stringResponse1: string) => observer.next(stringResponse),
+    //     (error: any) => observer.error(error),
+    //     () => observer.complete()
+      
 
-    try{
-    let response =  this.identityService.login(loginData);
-    response.then (data=> {
-      if (data ==='') {
-        console.log("login success");
-        this.authSuccessMessage="Succesfully logged in.";
-        this.showCloseButton=true;
-        this.showSubmitButton=false;
-      }else{
-        this.errors.push("Invalid username or password");
-      }
-    });
-    
-    // if (response ==='') {
-    //     this.authSuccessMessage="Succesfully logged in.";
-    //     this.showCloseButton=true;
-    //     this.showSubmitButton=false;
-    //   }else{
-    //     this.errors.push("Invalid username or password");
-    //     this.errors.push(response);
-    //   }
-    }catch(error){
+        
+    //   );
+    // }
+    // );
+    try {
+ 
+      this.identityService.login(loginData)
+      .subscribe({
+        next: (data) => {
+          console.log("login response: " + data);
+          if (data === 'Success') {
+            console.log("login success");
+            this.authSuccessMessage = "Successfully logged in."; // Assign the string value directly
+            this.showCloseButton = true;
+            this.showSubmitButton = false;
+          } else if (data === '') {
+            // Do nothing
+          } else {
+            this.errors.push("Invalid username or password");
+          }
+        },
+        error: (response)=> {
+          console.log("login user failed");
+          console.log(response.status);
+          console.log(response.error);
+          console.log(response.message);
+          this.errors.push(response.error);
+          
+        },complete: () => {
+          console.log("login Completed");
+        }
+      }).unsubscribe();
+      
+      // .pipe(
+        //   tap(data => {
+        //     console.log("login response: " + data);
+        //     if (data === 'Success') {
+        //       console.log("login success");
+        //       this.authSuccessMessage = "Successfully logged in."; // Assign the string value directly
+        //       this.showCloseButton = true;
+        //       this.showSubmitButton = false;
+        //     } else if (data === '') {
+        //       // Do nothing
+        //     } else {
+        //       this.errors.push("Invalid username or password");
+        //     }
+        //     })
+        // ).subscribe(() => {
+          
+        //   console.log("login success");
+        // });
+          // this.authSuccessMessage = "Successfully logged in.";
+          // this.showCloseButton = true;
+          // this.showSubmitButton = false;
+      this.identityService.isLoggedIn$.subscribe(
+        data=>{console.log(' Login  component Is logged in: ' + data);
+        //this.closeModal();
+      
+        }
+        );  
+      this.identityService.isLoggedOut$.subscribe(
+        data=>{console.log(' Login  component Is logged out: ' + data);}
+        
+        );  
+            
+        
+    } catch (error) {
       console.log("login error: " + error);
       this.errors.push("Invalid username or password");
     }
+    //return response$;
   }
 
 

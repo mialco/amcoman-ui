@@ -6,15 +6,24 @@ import { Observable } from 'rxjs';
 import { TreeNode } from './tree-node.interface';
 import { CategoryGroup } from './category-group';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { Params } from '@angular/router';
+import { query } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig, public http: HttpClient ) { }
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig, public http: HttpClient ) {
+
+   }
+
+  private pageSizeDefault: number = 3;
   private baseUrl = `${this.config.apiEndpoint}/products`;
-  
+  private pageCounter:number = 0;
+  private pageSize:number = this.pageSizeDefault;
+  private totalPages : number = 0;
+
   // getMockProduct():ProductData
   // {
   //   // var p= new ProductData();
@@ -28,15 +37,31 @@ export class ProductsService {
   selectedNodes : Map<number, boolean>  = new Map<number, boolean>();
   selectedGroups : Map<number,boolean> = new Map  <number,boolean>();
 
+  getPageNextCounter():number{
+    return ++this.pageCounter;
+  }
+  getPageCounter():number{
+    return this.pageCounter;
+  }
+  getPageSize():number{
+    return this.pageSize;
+  }
+
+
   getProduct(productId:number):Observable<ProductData>{
     return  this.http.get<ProductData>(`${this.baseUrl}/${productId}`);
   }
 
-  getProducts (page:number, pageSize:number) :Observable<ProductData[]>  {
+  getProducts (page:number, pageSize:number, params:Params) :Observable<ProductData[]>  {
     console.log('A call was made to get products')
     var products  : ProductData[] = new Array<ProductData>;
+      //var url:string = `${this.baseUrl}?pageindex=${page}&pagesize=${pageSize}`
       var url:string = `${this.baseUrl}?pageindex=${page}&pagesize=${pageSize}`
-      var result = this.http.get<ProductData[]>(url)
+      var url:string = `${this.baseUrl}/list`
+      let queryString = new URLSearchParams(params).toString();
+      console.log('URL for getting products: ' + url + ' Params: ' + queryString);
+      
+      var result = this.http.get<ProductData[]>(url, params);
 
       return  result;
   }

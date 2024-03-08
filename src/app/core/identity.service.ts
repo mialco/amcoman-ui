@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { APP_CONFIG, IAppConfig } from '../../app/app-config';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, catchError, map, of } from 'rxjs';
 import { MessageService, ErrorMessages } from './message.service';
 import {BehaviorSubject} from 'rxjs';
@@ -22,6 +22,8 @@ export class IdentityService {
 
   private authData = new AuthData();
   private authDataSubject = new BehaviorSubject<AuthData>(this.authData);
+  loginProcessStatus = new BehaviorSubject<string>('');
+
   user$ : Observable<AuthData> = this.authDataSubject.asObservable();
   isLoggedIn$: Observable<boolean> = this.user$.pipe(map(authData => authData.username !== ''));
   isLoggedOut$: Observable<boolean> = this.user$.pipe(map(authData => authData.username === '' ));
@@ -55,15 +57,32 @@ export class IdentityService {
     }
   }  
   
-  async login(loginData:userLoginVm): Promise<string>  {     //: Observable<AuthData| undefined> {
+login1(loginData:userLoginVm): Observable<AuthToken>  {
+
+  var authData! : AuthData
+  var url = this.buildLoginApiUrl()
+  const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  var postObservable =  this.http.post<AuthToken>(url,loginData);
+  var subscription = postObservable.subscribe(token => {});
+  // postObservable.subscribe(token => {
+    
+  // });
+  return postObservable
+}
+
+
+  login(loginData:userLoginVm): Observable<string>  {
     var authData! : AuthData 
     var url = this.buildLoginApiUrl()
     console.log('Login data sent to api: ' + url  +  ' ' +   JSON.stringify(loginData));
-
+    var newObservable:Observable<string> = new Observable<string>(observer => {
+    
+    });
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    await of (this.http.post<AuthToken>(url,loginData).
+    var subscription=  this.http.post<AuthToken>(url,loginData).
         subscribe(token => {
             console.log('Data received from loginapi: ' + JSON.stringify(token));
+            
             //We extract the user name from the token and set it in the authData
             this.authData.token = token;
             this.authData.username='';
@@ -88,35 +107,37 @@ export class IdentityService {
             this.isLoggedIn$ = of(true);
             //this.authDataSubject.next(authData);
             console.log('AuthData after login: ' + JSON.stringify(this.authData.username));
-            return '';  
+            this.loginProcessStatus.next('Success');
+            return of('Success');  
         }
-      // ,error => {
-      //   let errorMessage = '';        
-      //   console.log('Error in login after subscribe: ' + JSON.stringify(error));
-      //   if(error.headers){
-      //     error.headers.forEach((item: string) => {
-      //       console.log(item + ' : ' + item + ' : ' );
-      //     });
-      //     if(error.headers.status){
-      //       errorMessage = error.headers.status! + ' - ';
-      //     }
-      //     if (error.headers.title){
-      //       errorMessage += error.headers.title!;
-      //     }
-      //   }
-      //   if (errorMessage === '') {
-      //     errorMessage = 'Unauthorized';
-      //   }
-      //   return of(errorMessage); 
-      // }          
+      ,error => {
+        let errorMessage = '';        
+        console.log('Error in login after subscribe: ' + JSON.stringify(error));
+        this.loginProcessStatus.next('Unauthorized');
+        if(error.headers){
+          error.headers.forEach((item: string) => {
+            console.log(item + ' : ' + item + ' : ' );
+          });
+          if(error.headers.status){
+            errorMessage = error.headers.status! + ' - ';
+          }
+          if (error.headers.title){
+            errorMessage += error.headers.title!;
+          }
+        }
+        if (errorMessage === '') {
+          errorMessage = 'Unauthorized';
+        }
+        return of(errorMessage); 
+      }          
       )
-      ,
-      catchError (error => {
-        console.log('Error in login: ' + JSON.stringify(error));
-        this.messageService.parseErrorAndPush(error, new ErrorMessages("error: " + JSON.stringify(error)));        
-        return 'Unauthorized'; 
-      })) ;
-      return '';
+      // catchError (error => {
+      //   console.log('Error in login: ' + JSON.stringify(error));
+      //   this.messageService.parseErrorAndPush(error, new ErrorMessages("error: " + JSON.stringify(error)));        
+      //   this.loginProcessStatus.next('Unauthorized');
+      //   return of('Unauthorized'); 
+      //}) ;
+      return of ('');
   }
 
 getUserName(): string {
