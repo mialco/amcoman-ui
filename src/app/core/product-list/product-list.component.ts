@@ -34,9 +34,23 @@ export class ProductListComponent implements OnInit {
   ngOnInit(){
 
     this.route.queryParams.subscribe(params => {
-      this.updateProductList(params, this.productsService.getPageNextCounter(), this.productsService.getPageSize());    
+      if (params['currentPage'] === undefined)      
+        return;
+      if (params['pageSize'] === undefined)      
+        return;
+      if (params['categories'] === undefined || params['categories'] === null || params['categories'] === '')
+      {
+        //I would like to return an empty list of products
+        this.productList.data = [];
+        //and reset the paginator
+        this.paginator.firstPage();
+        this.productsService.goToFirstPage();
+        return;
 
 
+      }
+           
+      this.updateProductList(params, this.productsService.getCurrentPage(), this.productsService.getPageSize());    
     });
 
     this.productList = new MatTableDataSource<ProductData>(undefined);
@@ -48,14 +62,14 @@ export class ProductListComponent implements OnInit {
 
   this.productList.paginator = this.paginator;
   this.productList.sort=this.sort;
-
+  
 
 }
 
 updateProductList(params: Params,  pageCounter:number, pageSize:number){
   
   console.log('updateProductList' +   JSON.stringify(params));
-  this.productsService.getProducts(pageCounter, pageSize, {params}).subscribe(result=>this.productList.data = result);
+  this.productsService.getProducts(this.productsService.getCurrentPage(), this.productsService.getPageSize(), {params}).subscribe(result=>this.productList.data = result.products);
 
   
 }

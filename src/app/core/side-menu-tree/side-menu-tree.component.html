@@ -8,8 +8,6 @@
       (click)="treeClicked(node)"
       [ngClass]="{'selected' : node.selected}"
       >
-        
-        
         {{node.name}}</a>
     </mat-tree-node>
   <!-- This is the tree node template for expandable nodes -->
@@ -22,7 +20,15 @@
           </mat-icon>
         </button>
         <!-- {{node.name}} -->
-        <a [routerLinkActive]="['active']" [routerLink]="[node.link]">{{node.name}}</a>
+        <!-- <a [routerLinkActive]="['active']" [routerLink]="[node.link]">{{node.name}}</a> -->
+        <a [routerLinkActive]="['active']" [routerLink]="[node.link]"
+        (click)="node.selected = !node.selected"
+        (click)="treeClicked(node)"
+        [ngClass]="{'selected' : node.selected}"
+  
+        
+        >{{node.name}}</a>
+        
       </div>
 
       <!-- There is inline padding applied to this div using styles.

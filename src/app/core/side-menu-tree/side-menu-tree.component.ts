@@ -68,7 +68,8 @@ export class SideMenuTreeComponent implements OnInit{
     //I want to navigate to the products page with the selected nodes but not loading the page again
     //I want to pass the selected nodes to the products page
 
-    this.router.navigate(['products/list'],  { queryParams: { categories :  selectedNodesIds.join(',') , pageindex:this.productService.getPageNextCounter() , pagesize: this.productService.getPageSize()} } );
+    this.router.navigate(['products/list'],  { queryParams: { categories :  selectedNodesIds.join(',') , currentPage : this.productService.getCurrentPage() , pageSize: this.productService.getPageSize()} } );
+  console.log('Tree clicked: ' + node.name + ' ' + ' Page: ' + this.productService.getCurrentPage());
   }
  
 }

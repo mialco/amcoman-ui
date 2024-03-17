@@ -8,6 +8,7 @@ import { CategoryGroup } from './category-group';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { Params } from '@angular/router';
 import { query } from '@angular/animations';
+import { ProductListPaged } from './product-list-paged.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -37,14 +38,20 @@ export class ProductsService {
   selectedNodes : Map<number, boolean>  = new Map<number, boolean>();
   selectedGroups : Map<number,boolean> = new Map  <number,boolean>();
 
-  getPageNextCounter():number{
+  getNextPage():number{
     return ++this.pageCounter;
   }
-  getPageCounter():number{
-    return this.pageCounter;
+  getCurrentPage():number{
+    return  this.pageCounter === 0 ? 1 : this.pageCounter;
   }
   getPageSize():number{
     return this.pageSize;
+  }
+  goToPage(page:number){
+    this.pageCounter = page;
+  }
+  goToFirstPage(){
+    this.pageCounter = 1;
   }
 
 
@@ -52,16 +59,16 @@ export class ProductsService {
     return  this.http.get<ProductData>(`${this.baseUrl}/${productId}`);
   }
 
-  getProducts (page:number, pageSize:number, params:Params) :Observable<ProductData[]>  {
+  getProducts (page:number, pageSize:number, params:Params) :Observable<ProductListPaged>  {
     console.log('A call was made to get products')
     var products  : ProductData[] = new Array<ProductData>;
       //var url:string = `${this.baseUrl}?pageindex=${page}&pagesize=${pageSize}`
-      var url:string = `${this.baseUrl}?pageindex=${page}&pagesize=${pageSize}`
+      //var url:string = `${this.baseUrl}?pageindex=${page}&pagesize=${pageSize}`
       var url:string = `${this.baseUrl}/list`
-      let queryString = new URLSearchParams(params).toString();
-      console.log('URL for getting products: ' + url + ' Params: ' + queryString);
+      //let queryString = new URLSearchParams(params).toString();
+      console.log('URL for getting products: ' + url + ' Params: ' + JSON.stringify(params));
       
-      var result = this.http.get<ProductData[]>(url, params);
+      var result = this.http.get<ProductListPaged>(url, params);
 
       return  result;
   }

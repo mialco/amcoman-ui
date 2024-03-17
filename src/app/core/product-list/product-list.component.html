@@ -1,13 +1,9 @@
-<p>product-list works!</p>
-<mat-table [dataSource]="productList" matSort matPaginator >
-            <!-- change the table style to display the description in a better way -->
-        
-    <!-- <ng-container>
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Column Header </mat-header-cell>
-        <mat-cell *matCellDef="let item"> {{ item.columnName }} </mat-cell>
-    </ng-container> -->
-
-    
+    <div *ngIf="productList.data.length == 0" class="alert alert-warning text-center" role="alert">
+        No products found
+    </div>    
+<mat-table [dataSource]="productList" matSort matPaginator *ngIf="productList.data.length > 0" >
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->    
     <ng-container matColumnDef="productName">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
         <mat-cell *matCellDef="let product"><a title="More Details" href="product/{{product.id}}">{{ product.productName }}</a>  </mat-cell>
