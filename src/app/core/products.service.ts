@@ -9,6 +9,7 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { Params } from '@angular/router';
 import { query } from '@angular/animations';
 import { ProductListPaged } from './product-list-paged.interface';
+import { PageState } from './page-state.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +20,25 @@ export class ProductsService {
 
    }
 
+  private storageKey = 'pageState';
   private pageSizeDefault: number = 3;
   private baseUrl = `${this.config.apiEndpoint}/products`;
   private pageCounter:number = 0;
   private pageSize:number = this.pageSizeDefault;
-  private totalPages : number = 0;
+  totalPages : number = 50;
+
+  pageState: PageState =  {
+    currentPage: 1,
+    totalItems: 0,
+    totalPages: 0,
+    pageSize: this.pageSizeDefault,
+    categories: [],
+    searchTerm: '',
+    pageActivated: false
+  };
+
+
+
 
   // getMockProduct():ProductData
   // {
@@ -47,13 +62,21 @@ export class ProductsService {
   getPageSize():number{
     return this.pageSize;
   }
+  setPageSize(pageSize:number){
+    this.pageSize = pageSize;
+  }
   goToPage(page:number){
     this.pageCounter = page;
   }
   goToFirstPage(){
     this.pageCounter = 1;
   }
-
+  setTotalPages(totalPages:number){
+  this.totalPages = totalPages;
+  }
+  getTotalPages():number{
+    return this.totalPages;
+  } 
 
   getProduct(productId:number):Observable<ProductData>{
     return  this.http.get<ProductData>(`${this.baseUrl}/${productId}`);
@@ -115,5 +138,15 @@ export class ProductsService {
     return `${this.config.apiEndpoint}/categories/groups/view`;
   }
 
+  public saveState(){
+    localStorage.setItem(this.storageKey, JSON.stringify(this.pageState));
+  }
+
+  public loadStateFromStorage()  {
+    let state = localStorage.getItem(this.storageKey);
+    if (state){
+      this.pageState = JSON.parse(state);
+    }
+  }
 
 }

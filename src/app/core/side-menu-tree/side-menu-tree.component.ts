@@ -27,7 +27,7 @@ export class SideMenuTreeComponent implements OnInit{
 
   ngOnInit(): void {
     
-    console
+    console.log('SideMenuTreeComponent ngOnInit');
     this.productService.getCategoryTree([]).subscribe(data => {  this.productService.treeDataSource.data = data; })
     
 
@@ -70,6 +70,21 @@ export class SideMenuTreeComponent implements OnInit{
 
     this.router.navigate(['products/list'],  { queryParams: { categories :  selectedNodesIds.join(',') , currentPage : this.productService.getCurrentPage() , pageSize: this.productService.getPageSize()} } );
   console.log('Tree clicked: ' + node.name + ' ' + ' Page: ' + this.productService.getCurrentPage());
+  }
+
+  navBarClicked(): void {
+    console.log('NavBar clicked');
+    let selectedNodesIds:number[] = []
+    this.productService.selectedNodes.forEach((value,key)  => {
+      console.log('Node id: ' + key + ' Selected: ' + value);
+      if (value)
+      {
+        selectedNodesIds.push(key);
+      }          
+    });
+    
+    this.router.navigate(['products/list'],  { queryParams: { categories :  selectedNodesIds.join(',') , currentPage : this.productService.getCurrentPage() , pageSize: this.productService.getPageSize()} } );
+    //console.log('Tree clicked: ' + node.name + ' ' + ' Page: ' + this.productService.getCurrentPage());
   }
  
 }

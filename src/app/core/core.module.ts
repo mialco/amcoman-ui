@@ -13,7 +13,7 @@ import { TruncateComponent } from './truncate/truncate.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { MatTableModule } from '@angular/material/table'
-import { MatPaginatorModule} from '@angular/material/paginator'
+import { MatPaginator, MatPaginatorModule} from '@angular/material/paginator'
 import { MatSortModule } from '@angular/material/sort'
 import { SideMenuDynamicComponent } from './side-menu-dynamic/side-menu-dynamic.component';
 import {  MatListModule } from '@angular/material/list';
@@ -33,6 +33,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     RouterModule,
     MatTableModule,
     MatPaginatorModule,
+    MatPaginator,
     MatSortModule,
     MatListModule,
     MatTreeModule,

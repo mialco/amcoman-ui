@@ -1,4 +1,4 @@
-<mat-tree [dataSource]="productService.treeDataSource" [treeControl]="treeControl" class="side-tree">
+<mat-tree [dataSource]="productService.treeDataSource" [treeControl]="treeControl" class="side-tree" (click)="navBarClicked()">
   <!-- This is the tree node template for leaf nodes -->
   <!-- There is inline padding applied to this node using styles.
     This padding value depends on the mat-icon-button width. -->
