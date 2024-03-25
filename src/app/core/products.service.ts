@@ -25,7 +25,7 @@ export class ProductsService {
   private baseUrl = `${this.config.apiEndpoint}/products`;
   private pageCounter:number = 0;
   private pageSize:number = this.pageSizeDefault;
-  totalPages : number = 50;
+  totalPages : number = 0;
 
   pageState: PageState =  {
     currentPage: 1,
@@ -147,6 +147,15 @@ export class ProductsService {
     if (state){
       this.pageState = JSON.parse(state);
     }
+  }
+
+  buildCategoryParamsFromPageState(): Params {
+    let params: Params = {
+      currentPage: this.pageState.currentPage,
+      pagesize: this.pageState.pageSize,
+      categories: this.pageState.categories.join(','),
+    };
+     return params;
   }
 
 }
